@@ -1,9 +1,282 @@
 ﻿<Application x:Class="SAIP.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SAIP"
-             StartupUri="MainWindow.xaml">
+             xmlns:conv="clr-namespace:SAIP.Helpers"
+             xmlns:ViewModel="clr-namespace:SAIP.ViewModel"
+             xmlns:UserControl="clr-namespace:SAIP.View.ViewContents"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             StartupUri="View/winLogin.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--ENLACES A VIEWMODELS-->
+            <ViewModel:Main_ViewModel x:Key="MainViewModel"/>
+            <ViewModel:Sucursal_ViewModel x:Key="SucursalViewModel"/>
+            <ViewModel:Roles_ViewModel x:Key="RolesViewModel"/>
+            <ViewModel:Documentos_ViewModel x:Key="DocumentosViewModel" />
+            
+            <!--TEMPLATES-->
+            <ControlTemplate x:Key="btnGuardar">
+                <Button Background="#FF219C36" BorderBrush="#FF12571E" Width="120">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image Source="Assets/images/dashboard/guardar.png"/>
+                        <TextBlock Text="Guardar" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+            <ControlTemplate x:Key="btnCancelar">
+                <Button Background="#FFE02525" BorderBrush="#FF9B1717" Width="120">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image Source="Assets/images/dashboard/cancelar.png"/>
+                        <TextBlock Text="Cancelar" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+            <ControlTemplate x:Key="btnCerrar" TargetType="Button">
+                <Button Name="btnCerrar" 
+                        Width="25" 
+                        Height="25" 
+                        BorderBrush="{x:Null}" 
+                        HorizontalAlignment="Right" 
+                        Margin="0 0 10 0" 
+                        Command="{Binding Source={StaticResource MainViewModel}, Path=btnCloseUserControl}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/SAIP;component/Assets/images/dashboard/cerrar1.png"/>
+                    </Button.Background>
+                </Button>
+            </ControlTemplate>
+            <ControlTemplate x:Key="btnEditar">
+                <Button Background="#FF0B68A6" BorderBrush="#FF093C5F" Width="60" Height="30" Margin="5">
+                    <Image Source="/SAIP;component/Assets/images/dashboard/editar.png"/>
+                </Button>
+            </ControlTemplate>
+            <ControlTemplate x:Key="btnEliminar">
+                <Button Background="#FFBD1212" BorderBrush="#FF760B0B" Width="60" Height="30" Margin="5">
+                    <Image Source="/SAIP;component/Assets/images/dashboard/eliminar.png"/>
+                </Button>
+            </ControlTemplate>
+            <DataTemplate x:Key="btn_Update_Delete">
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="btnEditar" Background="#FF0B68A6" BorderBrush="#FF093C5F" Width="60" Height="30" Margin="5">
+                        <Image Source="/SAIP;component/Assets/images/dashboard/editar.png"/>
+                    </Button>
+                    <Button Name="btnEliminar" Background="#FFBD1212" BorderBrush="#FF760B0B" Width="60" Height="30" Margin="5">
+                        <Image Source="/SAIP;component/Assets/images/dashboard/eliminar.png"/>
+                    </Button>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ItemTemplateAccesoSucursales">
+                <CheckBox Content="{Binding RazonSocial}" FontSize="10" FontWeight="Bold" Height="15" Cursor="Hand"/>
+            </DataTemplate>
+            <DataTemplate x:Key="DocumentosView">
+                <UserControl:DocumentosCtrlU/>
+            </DataTemplate>
+
+            <!--HELPERS-->
+
+            <conv:BooleanToVisibilityConverter x:Key="BoolToVist"/>
+            <conv:SelectedItemToBinding x:Key="SelectedToBinding"/>
+            <conv:StudentConverter x:Key="studentParameterConverter"/>
+            
+            <!--ESTILOS-->
+
+            <!--Botones para el cuadro de Selección de Sucursal-->
+            <Style x:Key="StyleBtnSucursal" TargetType="Button">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Image Width="40" Source="/SAIP;component/Assets/images/dashboard/grafico.png"/>
+                                <TextBlock Name="textBtnSucursal" Text="{TemplateBinding Content}" Margin="0 10 0 0" Foreground="White" FontFamily="Roboto" FontSize="16" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Height" Value="142.5"/>
+                <Setter Property="Width" Value="142.5"/>
+                <Setter Property="Background" Value="#FF042964"/>
+                <Setter Property="BorderBrush" Value="#FF031025"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border" BorderThickness="1" CornerRadius="8" BorderBrush="#FF031025" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.8" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Command" Value="{Binding btnSucursal_Click}"/>
+            </Style>
+
+            <!--Estilos para alinear verticalmente contenido de celda al centro-->
+            <Style x:Key="StyleCell_VAlignment" TargetType="{x:Type DataGridCell}">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                            <Grid>
+                                <ContentPresenter VerticalAlignment="Center" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--Estilos para alinear horizontalmente el contenido de la celda al centro-->
+            <Style x:Key="StyleCell_HAlignment" TargetType="{x:Type DataGridCell}">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                            <Grid>
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="EtiquetasStandar" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="Roboto"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#DD000000"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            
+            
+            
+            <!--COLORES-->
+
+
+            <Color x:Key="WordBlue">#FF112255</Color>
+            
+            <SolidColorBrush x:Key="BorderColorPanelStandar" Color="#FFB9B9FF" />
+            <SolidColorBrush x:Key="WordBlueBrush" Color="{StaticResource WordBlue}" />
+            <LinearGradientBrush x:Key="BackgroundTitleBar" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FF020A29" Offset="0"/>
+                <GradientStop Color="#FF0A2583" Offset="0.896"/>
+                <GradientStop Color="#FE020A29" Offset="1"/>
+            </LinearGradientBrush>
+
+            <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <Setter Property="IsTabStop" Value="false"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border x:Name="rectangle"
+                                SnapsToDevicePixels="True"
+                                Background="{StaticResource WordBlueBrush}"
+                                CornerRadius="3"
+                                Opacity="0.2"
+                                Height="{TemplateBinding Height}"
+                                Width="{TemplateBinding Width}"/>
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="1" Duration="0:0:0.3" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="Opacity" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="0.2" Duration="0:0:0.3" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="Opacity" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Name="MyScrollBar" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+                <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+                <Setter Property="Width" Value="8"/>
+                <Setter Property="MinWidth" Value="{Binding Width, RelativeSource={RelativeSource Self}}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="Transparent">
+
+                                <Border Padding="0 10">
+                                    <Track x:Name="PART_Track"
+                               IsDirectionReversed="true"
+                               IsEnabled="{TemplateBinding IsMouseOver}"
+                               Width="5"
+                               HorizontalAlignment="Center">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageUpCommand}" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageDownCommand}" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                        </Track.Thumb>
+                                    </Track>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Orientation" Value="Horizontal">
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="MinWidth" Value="0"/>
+                        <Setter Property="Height" Value="14"/>
+                        <Setter Property="MinHeight" Value="{Binding Height, RelativeSource={RelativeSource Self}}"/>
+                        <Setter Property="Margin" Value="0 -14 0 0" />
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                        <Track x:Name="PART_Track"
+                                    IsEnabled="{TemplateBinding IsMouseOver}"
+                                    Height="6">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageLeftCommand}"/>
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageRightCommand}"/>
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

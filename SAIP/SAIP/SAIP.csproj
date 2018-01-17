@@ -33,9 +33,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SAIP.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,17 +69,68 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Data\AccesoSucursal_Data.cs" />
+    <Compile Include="Data\Conexion_Data.cs" />
+    <Compile Include="Data\Documentos_Data.cs" />
+    <Compile Include="Data\Empresa_Data.cs" />
+    <Compile Include="Data\ListasData\ListaUsuario_Data.cs" />
+    <Compile Include="Data\Login_Data.cs" />
+    <Compile Include="Data\Roles_Data.cs" />
+    <Compile Include="Data\Sucursal_Data.cs" />
+    <Compile Include="Helpers\Accesoria.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Model\AccesoSucursal_Model.cs" />
+    <Compile Include="Model\BusinessObject\AccesoSucursal_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Documentos_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Empresa_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Login_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Roles_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Sucursal_BusinessObject.cs" />
+    <Compile Include="Model\BusinessObject\Usuario_BusinessObject.cs" />
+    <Compile Include="Model\Documentos_Model.cs" />
+    <Compile Include="Model\dtsConexion.cs" />
+    <Compile Include="Model\dtsUsuarios.cs" />
+    <Compile Include="Model\Empresa_Model.cs" />
+    <Compile Include="Model\ListasModel\ListaUsuario_Model.cs" />
+    <Compile Include="Model\Login_Model.cs" />
+    <Compile Include="Model\Roles_Model.cs" />
+    <Compile Include="Model\Sucursal_Model.cs" />
+    <Compile Include="Service\DialogService\DialogService.cs" />
+    <Compile Include="Service\DialogService\IDialogService.cs" />
+    <Compile Include="Service\DialogService\WindowContainer.xaml.cs">
+      <DependentUpon>WindowContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AccesoSucursal_ViewModel.cs" />
+    <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Documentos_ViewModel.cs" />
+    <Compile Include="ViewModel\Empresa_ViewModel.cs" />
+    <Compile Include="ViewModel\Login_ViewModel.cs" />
+    <Compile Include="ViewModel\Main_ViewModel.cs" />
+    <Compile Include="ViewModel\Roles_ViewModel.cs" />
+    <Compile Include="ViewModel\Sucursal_ViewModel.cs" />
+    <Compile Include="ViewModel\Usuario_ViewModel.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\ViewContents\DocumentosCtrlU.xaml.cs">
+      <DependentUpon>DocumentosCtrlU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewContents\EmpresaCtrlU.xaml.cs">
+      <DependentUpon>EmpresaCtrlU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewContents\UsuarioCtrlU.xaml.cs">
+      <DependentUpon>UsuarioCtrlU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\winLogin.xaml.cs">
+      <DependentUpon>winLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\winUsuarios.xaml.cs">
+      <DependentUpon>winUsuarios.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +151,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\images\dashboard\vineta" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -92,6 +160,80 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BusinessObject\" />
+    <Folder Include="View\UserControl\" />
+    <Folder Include="View\Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Recursos.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Service\DialogService\WindowContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ViewContents\DocumentosCtrlU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ViewContents\EmpresaCtrlU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ViewContents\UsuarioCtrlU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\winLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\winUsuarios.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\images\dashboard\administracion.png" />
+    <Resource Include="Assets\images\dashboard\administracion1.png" />
+    <Resource Include="Assets\images\dashboard\ajustes.png" />
+    <Resource Include="Assets\images\dashboard\almacen.png" />
+    <Resource Include="Assets\images\dashboard\cancelar.png" />
+    <Resource Include="Assets\images\dashboard\cerrar.png" />
+    <Resource Include="Assets\images\dashboard\cerrar1.png" />
+    <Resource Include="Assets\images\dashboard\compras.png" />
+    <Resource Include="Assets\images\dashboard\contabilidad.png" />
+    <Resource Include="Assets\images\dashboard\editar.png" />
+    <Resource Include="Assets\images\dashboard\eliminar.png" />
+    <Resource Include="Assets\images\dashboard\fondoLogin.jpg" />
+    <Resource Include="Assets\images\dashboard\Foto.JPG" />
+    <Resource Include="Assets\images\dashboard\grafico.png" />
+    <Resource Include="Assets\images\dashboard\guardar.png" />
+    <Resource Include="Assets\images\dashboard\imprimir.png" />
+    <Resource Include="Assets\images\dashboard\keyboard.jpg" />
+    <Resource Include="Assets\images\dashboard\login.png" />
+    <Resource Include="Assets\images\dashboard\mantenimiento.png" />
+    <Resource Include="Assets\images\dashboard\maximizar.png" />
+    <Resource Include="Assets\images\dashboard\minimizar.png" />
+    <Resource Include="Assets\images\dashboard\minimizar2.png" />
+    <Resource Include="Assets\images\dashboard\mr.png" />
+    <Resource Include="Assets\images\dashboard\nuevo.png" />
+    <Resource Include="Assets\images\dashboard\punto_medio.png" />
+    <Resource Include="Assets\images\dashboard\punto_medio1.png" />
+    <Resource Include="Assets\images\dashboard\reajustar.png" />
+    <Resource Include="Assets\images\dashboard\seguridad.png" />
+    <Resource Include="Assets\images\dashboard\userDefault.png" />
+    <Resource Include="Assets\images\dashboard\ventas.png" />
+    <Content Include="Assets\video\backgroundVideo.mp4" />
+    <Content Include="Assets\video\hola.mp4" />
+    <Content Include="Assets\video\Ipad.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

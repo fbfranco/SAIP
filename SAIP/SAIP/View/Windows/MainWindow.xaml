@@ -1,0 +1,972 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        x:Class="SAIP.View.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="690" 
+        Width="1180"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="Transparent"
+        FontFamily="{DynamicResource MaterialDesignFont}" 
+        AllowDrop="True"
+        Name="VentanaPrincipal">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="Barra_Titulo" Grid.Row="0" 
+                CornerRadius="10,10,0,0"
+                MouseLeftButtonDown="Border_MouseLeftButtonDown" 
+                Background="#FF00358C">
+            <Grid >
+                <TextBlock HorizontalAlignment="Left" Height="26" Margin="89,10,0,0" TextWrapping="Wrap" Text="SAIP" VerticalAlignment="Top" Width="82" FontWeight="Bold" Foreground="White" FontFamily="Georgia" FontSize="28"/>
+                <Separator HorizontalAlignment="Left" Height="2" Margin="20,40,0,0" VerticalAlignment="Top" Width="252" Background="White"/>
+                <Label Content="Sistema de Administración Integral Pymes" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" Width="268" Height="32" Foreground="#DDFFFFFF" FontFamily="Century Gothic" FontSize="12" FontWeight="Bold"/>
+                <Image HorizontalAlignment="Left" Margin="164,12,0,44" Width="16" Source="../Assets/images/dashboard/mr.png" RenderTransformOrigin="0.458,0.429">
+                    <Image.OpacityMask >
+                        <ImageBrush ImageSource="../Assets/images/dashboard/mr.png"/>
+                    </Image.OpacityMask>
+                </Image>
+                <Image Source="../Assets/images/dashboard/grafico.png" HorizontalAlignment="Left" Margin="167,13,0,34" Width="28"/>
+
+                <StackPanel Margin="0 0 10 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button x:Name="btnMinimizar" Click="btnMinimizar_Click" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../Assets/images/dashboard/minimizar2.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="btnMaximizar" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0" Click="btnMaximizar_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../Assets/images/dashboard/maximizar.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button Command="{Binding Source={StaticResource DocumentosViewModel},Path=btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../Assets/images/dashboard/cerrar.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border x:Name="WindowPrincipal" Grid.Row="1" CornerRadius="0,0,10,11">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="CDSidebar" Width="{Binding WidthSideBar}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="SideBar" Grid.Column="0" DataContext="{Binding Source={StaticResource MainViewModel}}" Background="#FF1E1E1E" CornerRadius="0,0,0,10" HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="170"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0">
+                            <Grid>
+                                <Ellipse HorizontalAlignment="Left" Height="85" Margin="57,20,0,0" Stroke="White" VerticalAlignment="Top" Width="85" Fill="White"/>
+                                <Ellipse HorizontalAlignment="Left" Height="80" Margin="59,23,0,59" Stroke="White" VerticalAlignment="Top" Width="80" x:Name="imgUsuario">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding DatosUsuarioLogueado/Imagen}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label x:Name="lblUsuario" Content="{Binding DatosUsuarioLogueado/UserName}"  VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Center" Cursor="Hand" FontWeight="Bold" FontSize="14" Margin="0,110,0,0"/>
+                                <TextBlock Name="lblSucursal" Text="{Binding NombreSucursal, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Center" Cursor="Hand" FontWeight="Bold" FontSize="12" TextWrapping="Wrap" TextAlignment="Center" ToolTip="Click para cambiar de Sucursal" MinWidth="100">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding lblSucursal_MouseLeftButtonDown}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBlock>
+                                <Separator HorizontalAlignment="Center" Height="14" Margin="0,160,0,0" VerticalAlignment="Top" Width="180"/>
+                            </Grid>
+                        </Border>
+                        <Grid Grid.Row="1" VerticalAlignment="Top">
+                            <StackPanel Orientation="Vertical" x:Name="stkPanel" Width="200" Margin="0" Cursor="Hand">
+                                <Border x:Name="PanelAdministracion" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnAdministracion" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/administracion.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Administración" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnDetalleCaja" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Detalle de Caja" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnOperaciones" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Operaciones" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnCtasxPagar" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Cuentas por Pagar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnCtasxCobrar" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Cuentas por Cobrar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelCompras" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnCompras" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/compras.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnComprasF" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnConsultaCompras" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Consulta Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnProveedores" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Proveedores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelVentas" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnVentas" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/ventas.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnVentasF" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnConsultaVentas" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Consulta Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnClientes" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Clientes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelAlmacen" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnAlmacen" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/almacen.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Almacén" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnAlmacenes"  Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Almacenes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnProductos" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Productos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnKardex" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Kárdex" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnInventario" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Inventario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="5" Background="#FF2D2D30" x:Name="btnCategorias" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Categorias" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="6" Background="#FF2D2D30" x:Name="btnMarcas" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Marcas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="7" Background="#FF2D2D30" x:Name="btnUnidades" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Unidades" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelContabilidad" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnContabilidad" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/contabilidad.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Contabilidad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnConceptosContables" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Conceptos Contables" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnLibroDiario" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Libro Diario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnLibroMayor" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Libro Mayor" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnFacturacion" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Facturación" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelMantenimiento" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnMantenimiento" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/ajustes.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Mantenimiento" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnEmpresa" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Empresa" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnSucursales" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Sucursales" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnDocumentos" Height="25">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                    <i:InvokeCommandAction Command="{Binding Path=btnDocumentos_MouseLeftButtonUp}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Documentos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnFacturas" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Facturas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="5" Background="#FF2D2D30" x:Name="btnTrabajadores" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Trabajadores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="PanelSeguridad" Height="35">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="25"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" x:Name="btnSeguridad" Height="35">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/seguridad.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Seguridad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnUsuarios" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Usuarios" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnPermisos" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Permisos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnBackup" Height="25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Backup" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="ContenedorPrincipal" Grid.Column="1" CornerRadius="0 0 10 0" Background="White">
+                    <Grid>
+                        <MediaElement x:Name="myMediaElement" Stretch="Fill" UnloadedBehavior="Manual">
+                            <MediaElement.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <MediaTimeline x:Name="myMediaTimeLine" Source="Assets/video/Ipad.mp4" Storyboard.TargetName="myMediaElement" RepeatBehavior="Forever"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </MediaElement.Triggers>
+                        </MediaElement>
+                        <Grid Name="backgroudOverAll" Background="Black" Opacity="0.6"/>
+                        <StackPanel Name="home" Orientation="Horizontal" Width="900" HorizontalAlignment="Center">
+                            <Border x:Name="InfoEmpresa" HorizontalAlignment="Center" Margin="50" Height="460" BorderBrush="White" Width="280" BorderThickness="2" CornerRadius="10">
+                                <StackPanel>
+                                    <Border Height="160" CornerRadius="10,10,0,0" Panel.ZIndex="10">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding Logo}"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <StackPanel Margin="0,10,0,5">
+                                        <Label Content="Razón Social:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="RazonSocial" Content="{Binding RazonSocial}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 5 0 5">
+                                        <Label Content="Rubro:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Rubro" Content="{Binding Rubro}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 5 0 5">
+                                        <Label Content="Encargado:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Encargado" Content="{Binding Encargado}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 5 0 5">
+                                        <Label Content="Aniversario:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Aniversario" Content="{Binding AniversarioFormater}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Name="AccesoSucursales" Height="460" Width="480" CornerRadius="10" BorderBrush="White" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="320"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Content="Seleccione una Sucursal" Foreground="White" FontFamily="Georgia" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                    <Border Grid.Row="1" Height="306" Width="460" BorderThickness="1" BorderBrush="#7FFFFFFF" CornerRadius="5" Margin="0">
+                                        <WrapPanel Name="ContenedorWrap" ScrollViewer.CanContentScroll="True">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Loaded">
+                                                    <i:InvokeCommandAction Command="{Binding LoadAccesos}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </WrapPanel>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <Grid Name="MainContainer">
+                            <ContentControl ContentTemplate="{Binding Source={StaticResource MainViewModel}, Path=ControlView}"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window> 

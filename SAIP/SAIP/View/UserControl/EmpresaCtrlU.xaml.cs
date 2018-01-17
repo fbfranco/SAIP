@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SAIP
+namespace SAIP.View.ViewContents
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// Lógica de interacción para EmpresaCtrlU.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EmpresaCtrlU : UserControl
     {
-        public MainWindow()
+        public EmpresaCtrlU()
         {
             InitializeComponent();
         }
