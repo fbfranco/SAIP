@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:conv="clr-namespace:SAIP.Helpers"
              xmlns:ViewModel="clr-namespace:SAIP.ViewModel"
-             xmlns:UserControl="clr-namespace:SAIP.View.ViewContents"
+             xmlns:UserControl="clr-namespace:SAIP.View.UserControls"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             StartupUri="View/winLogin.xaml">
+             StartupUri="View.Windows.LoginWindow">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,7 +21,7 @@
             <ViewModel:Main_ViewModel x:Key="MainViewModel"/>
             <ViewModel:Sucursal_ViewModel x:Key="SucursalViewModel"/>
             <ViewModel:Roles_ViewModel x:Key="RolesViewModel"/>
-            <ViewModel:Documentos_ViewModel x:Key="DocumentosViewModel" />
+            <ViewModel:Documentos_ViewModel x:Key="DocumentosViewModel"/>
             
             <!--TEMPLATES-->
             <ControlTemplate x:Key="btnGuardar">
@@ -85,7 +85,7 @@
             <conv:BooleanToVisibilityConverter x:Key="BoolToVist"/>
             <conv:SelectedItemToBinding x:Key="SelectedToBinding"/>
             <conv:StudentConverter x:Key="studentParameterConverter"/>
-            
+
             <!--ESTILOS-->
 
             <!--Botones para el cuadro de Selección de Sucursal-->

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace SAIP.ViewModel
+namespace SAIP.ViewModel.Base
 {
     public class RelayCommand : ICommand
     {

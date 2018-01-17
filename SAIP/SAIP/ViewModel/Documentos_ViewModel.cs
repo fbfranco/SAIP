@@ -1,6 +1,7 @@
-﻿using SAIP.Model;
-using SAIP.Model.BusinessObject;
+﻿using SAIP.BusinessObject;
+using SAIP.Model;
 using SAIP.Service.DialogService;
+using SAIP.ViewModel.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

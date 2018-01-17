@@ -3,7 +3,7 @@ using SAIP.Model.ListaModel;
 using System;
 using System.Collections.Generic;
 
-namespace SAIP.Model.BusinessObject
+namespace SAIP.BusinessObject
 {
     public class Usuario_BusinessObject
     {

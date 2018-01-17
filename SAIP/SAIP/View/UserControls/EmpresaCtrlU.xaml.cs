@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SAIP.Views
+namespace SAIP.View.UserControls
 {
     /// <summary>
-    /// Lógica de interacción para winUsuarios.xaml
+    /// Lógica de interacción para EmpresaCtrlU.xaml
     /// </summary>
-    public partial class winUsuarios : Window
+    public partial class EmpresaCtrlU : UserControl
     {
-        public winUsuarios()
+        public EmpresaCtrlU()
         {
             InitializeComponent();
-        }
-
-        private void btnCerrar_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

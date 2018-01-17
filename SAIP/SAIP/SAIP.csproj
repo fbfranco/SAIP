@@ -73,6 +73,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BusinessObject\AccesoSucursal_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Documentos_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Empresa_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Login_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Roles_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Sucursal_BusinessObject.cs" />
+    <Compile Include="BusinessObject\Usuario_BusinessObject.cs" />
     <Compile Include="Data\AccesoSucursal_Data.cs" />
     <Compile Include="Data\Conexion_Data.cs" />
     <Compile Include="Data\Documentos_Data.cs" />
@@ -84,13 +91,6 @@
     <Compile Include="Helpers\Accesoria.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Model\AccesoSucursal_Model.cs" />
-    <Compile Include="Model\BusinessObject\AccesoSucursal_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Documentos_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Empresa_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Login_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Roles_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Sucursal_BusinessObject.cs" />
-    <Compile Include="Model\BusinessObject\Usuario_BusinessObject.cs" />
     <Compile Include="Model\Documentos_Model.cs" />
     <Compile Include="Model\dtsConexion.cs" />
     <Compile Include="Model\dtsUsuarios.cs" />
@@ -114,23 +114,23 @@
     <Compile Include="ViewModel\Roles_ViewModel.cs" />
     <Compile Include="ViewModel\Sucursal_ViewModel.cs" />
     <Compile Include="ViewModel\Usuario_ViewModel.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewContents\DocumentosCtrlU.xaml.cs">
+    <Compile Include="View\UserControls\DocumentosCtrlU.xaml.cs">
       <DependentUpon>DocumentosCtrlU.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ViewContents\EmpresaCtrlU.xaml.cs">
+    <Compile Include="View\UserControls\EmpresaCtrlU.xaml.cs">
       <DependentUpon>EmpresaCtrlU.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ViewContents\UsuarioCtrlU.xaml.cs">
+    <Compile Include="View\UserControls\UsuarioCtrlU.xaml.cs">
       <DependentUpon>UsuarioCtrlU.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\winLogin.xaml.cs">
-      <DependentUpon>winLogin.xaml</DependentUpon>
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\winUsuarios.xaml.cs">
-      <DependentUpon>winUsuarios.xaml</DependentUpon>
+    <Compile Include="View\Windows\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\UsuariosWindow.xaml.cs">
+      <DependentUpon>UsuariosWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +151,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Assets\images\dashboard\vineta" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -161,11 +160,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BusinessObject\" />
-    <Folder Include="View\UserControl\" />
-    <Folder Include="View\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Recursos.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -175,65 +170,59 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="View\UserControls\DocumentosCtrlU.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ViewContents\DocumentosCtrlU.xaml">
+    <Page Include="View\UserControls\EmpresaCtrlU.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ViewContents\EmpresaCtrlU.xaml">
+    <Page Include="View\UserControls\UsuarioCtrlU.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ViewContents\UsuarioCtrlU.xaml">
+    <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\winLogin.xaml">
+    <Page Include="View\Windows\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\winUsuarios.xaml">
+    <Page Include="View\Windows\UsuariosWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\images\dashboard\administracion.png" />
-    <Resource Include="Assets\images\dashboard\administracion1.png" />
-    <Resource Include="Assets\images\dashboard\ajustes.png" />
-    <Resource Include="Assets\images\dashboard\almacen.png" />
-    <Resource Include="Assets\images\dashboard\cancelar.png" />
-    <Resource Include="Assets\images\dashboard\cerrar.png" />
-    <Resource Include="Assets\images\dashboard\cerrar1.png" />
-    <Resource Include="Assets\images\dashboard\compras.png" />
-    <Resource Include="Assets\images\dashboard\contabilidad.png" />
-    <Resource Include="Assets\images\dashboard\editar.png" />
-    <Resource Include="Assets\images\dashboard\eliminar.png" />
-    <Resource Include="Assets\images\dashboard\fondoLogin.jpg" />
-    <Resource Include="Assets\images\dashboard\Foto.JPG" />
-    <Resource Include="Assets\images\dashboard\grafico.png" />
-    <Resource Include="Assets\images\dashboard\guardar.png" />
-    <Resource Include="Assets\images\dashboard\imprimir.png" />
-    <Resource Include="Assets\images\dashboard\keyboard.jpg" />
-    <Resource Include="Assets\images\dashboard\login.png" />
-    <Resource Include="Assets\images\dashboard\mantenimiento.png" />
-    <Resource Include="Assets\images\dashboard\maximizar.png" />
-    <Resource Include="Assets\images\dashboard\minimizar.png" />
-    <Resource Include="Assets\images\dashboard\minimizar2.png" />
-    <Resource Include="Assets\images\dashboard\mr.png" />
-    <Resource Include="Assets\images\dashboard\nuevo.png" />
-    <Resource Include="Assets\images\dashboard\punto_medio.png" />
-    <Resource Include="Assets\images\dashboard\punto_medio1.png" />
-    <Resource Include="Assets\images\dashboard\reajustar.png" />
-    <Resource Include="Assets\images\dashboard\seguridad.png" />
-    <Resource Include="Assets\images\dashboard\userDefault.png" />
-    <Resource Include="Assets\images\dashboard\ventas.png" />
-    <Content Include="Assets\video\backgroundVideo.mp4" />
-    <Content Include="Assets\video\hola.mp4" />
-    <Content Include="Assets\video\Ipad.mp4" />
+    <Resource Include="Resource\Images\Background\fondoLogin.jpg" />
+    <Resource Include="Resource\Images\Background\Foto.JPG" />
+    <Resource Include="Resource\Images\Background\grafico.png" />
+    <Resource Include="Resource\Images\Background\keyboard.jpg" />
+    <Resource Include="Resource\Images\Background\mr.png" />
+    <Resource Include="Resource\Images\Background\userDefault.png" />
+    <Resource Include="Resource\Images\Buttons\cancelar.png" />
+    <Resource Include="Resource\Images\Buttons\cerrar.png" />
+    <Resource Include="Resource\Images\Buttons\editar.png" />
+    <Resource Include="Resource\Images\Buttons\eliminar.png" />
+    <Resource Include="Resource\Images\Buttons\guardar.png" />
+    <Resource Include="Resource\Images\Buttons\imprimir.png" />
+    <Resource Include="Resource\Images\Buttons\maximizar.png" />
+    <Resource Include="Resource\Images\Buttons\minimizar.png" />
+    <Resource Include="Resource\Images\Buttons\nuevo.png" />
+    <Resource Include="Resource\Images\Buttons\reajustar.png" />
+    <Resource Include="Resource\Images\MenuSideBar\administracion.png" />
+    <Resource Include="Resource\Images\MenuSideBar\administracion1.png" />
+    <Resource Include="Resource\Images\MenuSideBar\ajustes.png" />
+    <Resource Include="Resource\Images\MenuSideBar\almacen.png" />
+    <Resource Include="Resource\Images\MenuSideBar\compras.png" />
+    <Resource Include="Resource\Images\MenuSideBar\contabilidad.png" />
+    <Resource Include="Resource\Images\MenuSideBar\mantenimiento.png" />
+    <Resource Include="Resource\Images\MenuSideBar\punto_medio.png" />
+    <Resource Include="Resource\Images\MenuSideBar\seguridad.png" />
+    <Resource Include="Resource\Images\MenuSideBar\ventas.png" />
+    <Content Include="Resource\Video\Ipad.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

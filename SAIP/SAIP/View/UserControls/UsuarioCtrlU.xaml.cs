@@ -1,4 +1,4 @@
-﻿using SAIP.View;
+﻿using SAIP.View.Windows;
 using SAIP.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace SAIP.Views.ViewContents
+namespace SAIP.View.UserControls
 {
     /// <summary>
     /// Lógica de interacción para UsuarioCtrlU.xaml

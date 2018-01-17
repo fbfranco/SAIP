@@ -1,8 +1,9 @@
 ﻿using SAIP.Data;
+using SAIP.Model;
 using System;
 using System.Collections.Generic;
 
-namespace SAIP.Model.BusinessObject
+namespace SAIP.BusinessObject
 {
     public class Documentos_BusinessObject
     {

@@ -1,9 +1,10 @@
 ﻿using SAIP.Data;
+using SAIP.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SAIP.Model.BusinessObject
+namespace SAIP.BusinessObject
 {
     public class AccesoSucursal_BusinessObject
     {

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace SAIP.ViewModel
+namespace SAIP.ViewModel.Base
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

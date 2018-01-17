@@ -1,9 +1,10 @@
 ﻿using SAIP.Model;
-using SAIP.Model.BusinessObject;
+using SAIP.BusinessObject;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
+using SAIP.ViewModel.Base;
 
 namespace SAIP.ViewModel
 {

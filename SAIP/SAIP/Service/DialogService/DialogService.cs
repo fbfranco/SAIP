@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SAIP.ViewModel.Base;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using SAIP.ViewModel;
 
 namespace SAIP.Service.DialogService
 {

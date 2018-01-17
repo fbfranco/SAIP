@@ -1,6 +1,7 @@
-﻿using SAIP.Model;
-using SAIP.Model.BusinessObject;
-using SAIP.View;
+﻿using SAIP.BusinessObject;
+using SAIP.Model;
+using SAIP.View.Windows;
+using SAIP.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;

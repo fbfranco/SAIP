@@ -4,17 +4,17 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace SAIP
+namespace SAIP.View.Windows
 {
-    public partial class winLogin : Window
+    public partial class LoginWindow : Window
     {
         #region PATRON SINGLETON
-        private static winLogin Instance;
-        public static winLogin GetInstance()
+        private static LoginWindow Instance;
+        public static LoginWindow GetInstance()
         {
             if (Instance == null)
             {
-                Instance = new winLogin();
+                Instance = new LoginWindow();
             }
             return Instance;
         }
@@ -22,7 +22,7 @@ namespace SAIP
 
         #region CONSTRUCTOR
 
-        public winLogin()
+        public LoginWindow()
         {
             InitializeComponent();
             this.Name = "View_Login";

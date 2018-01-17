@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        x:Class="SAIP.View.MainWindow"
+        x:Class="SAIP.View.Windows.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="690" 
@@ -35,27 +35,27 @@
                 <TextBlock HorizontalAlignment="Left" Height="26" Margin="89,10,0,0" TextWrapping="Wrap" Text="SAIP" VerticalAlignment="Top" Width="82" FontWeight="Bold" Foreground="White" FontFamily="Georgia" FontSize="28"/>
                 <Separator HorizontalAlignment="Left" Height="2" Margin="20,40,0,0" VerticalAlignment="Top" Width="252" Background="White"/>
                 <Label Content="Sistema de Administración Integral Pymes" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" Width="268" Height="32" Foreground="#DDFFFFFF" FontFamily="Century Gothic" FontSize="12" FontWeight="Bold"/>
-                <Image HorizontalAlignment="Left" Margin="164,12,0,44" Width="16" Source="../Assets/images/dashboard/mr.png" RenderTransformOrigin="0.458,0.429">
+                <Image HorizontalAlignment="Left" Margin="164,12,0,44" Width="16" Source="pack://application:,,,/Resource/Images/Background/mr.png" RenderTransformOrigin="0.458,0.429">
                     <Image.OpacityMask >
-                        <ImageBrush ImageSource="../Assets/images/dashboard/mr.png"/>
+                        <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Background/mr.png"/>
                     </Image.OpacityMask>
                 </Image>
-                <Image Source="../Assets/images/dashboard/grafico.png" HorizontalAlignment="Left" Margin="167,13,0,34" Width="28"/>
+                <Image Source="pack://application:,,,/Resource/Images/Background/grafico.png" HorizontalAlignment="Left" Margin="167,13,0,34" Width="28"/>
 
                 <StackPanel Margin="0 0 10 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <Button x:Name="btnMinimizar" Click="btnMinimizar_Click" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0">
                         <Button.Background>
-                            <ImageBrush ImageSource="../Assets/images/dashboard/minimizar2.png"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/minimizar.png"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="btnMaximizar" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0" Click="btnMaximizar_Click">
                         <Button.Background>
-                            <ImageBrush ImageSource="../Assets/images/dashboard/maximizar.png"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/maximizar.png"/>
                         </Button.Background>
                     </Button>
                     <Button Command="{Binding Source={StaticResource DocumentosViewModel},Path=btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
                         <Button.Background>
-                            <ImageBrush ImageSource="../Assets/images/dashboard/cerrar.png"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/cerrar.png"/>
                         </Button.Background>
                     </Button>
                 </StackPanel>
@@ -118,7 +118,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/administracion.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/administracion.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Administración" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -138,7 +138,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Detalle de Caja" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -158,7 +158,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Operaciones" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -178,7 +178,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Cuentas por Pagar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -198,7 +198,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Cuentas por Cobrar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -228,7 +228,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/compras.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/compras.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -248,7 +248,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -268,7 +268,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Consulta Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -288,7 +288,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Proveedores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -318,7 +318,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/ventas.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/ventas.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -338,7 +338,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -358,7 +358,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Consulta Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -378,7 +378,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Clientes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -412,7 +412,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/almacen.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/almacen.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Almacén" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -432,7 +432,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Almacenes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -452,7 +452,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Productos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -472,7 +472,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Kárdex" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -492,7 +492,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Inventario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -512,7 +512,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Categorias" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -532,7 +532,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Marcas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -552,7 +552,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Unidades" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -583,7 +583,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/contabilidad.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/contabilidad.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Contabilidad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -603,7 +603,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Conceptos Contables" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -623,7 +623,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Libro Diario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -643,7 +643,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Libro Mayor" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -663,7 +663,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Facturación" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -695,7 +695,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/ajustes.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/ajustes.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Mantenimiento" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -715,7 +715,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Empresa" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -735,7 +735,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Sucursales" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -760,7 +760,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Documentos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -780,7 +780,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Facturas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -800,7 +800,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Trabajadores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -830,7 +830,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/seguridad.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/seguridad.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Seguridad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
@@ -850,7 +850,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Usuarios" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -870,7 +870,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Permisos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -890,7 +890,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="../Assets/images/dashboard/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Backup" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>

@@ -1,4 +1,4 @@
-﻿using SAIP.ViewModel;
+﻿using SAIP.ViewModel.Base;
 
 namespace SAIP.Service.DialogService
 {

@@ -1,12 +1,13 @@
 ﻿using SAIP.Model;
-using SAIP.Model.BusinessObject;
-using SAIP.View;
+using SAIP.BusinessObject;
+using SAIP.View.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using SAIP.ViewModel.Base;
 
 namespace SAIP.ViewModel
 {

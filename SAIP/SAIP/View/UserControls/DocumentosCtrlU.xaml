@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SAIP.View.ViewContents.DocumentosCtrlU"
+﻿<UserControl x:Class="SAIP.View.UserControls.DocumentosCtrlU"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,13 +6,6 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="542.482" d:DesignWidth="770.302">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="GroupDatagrid" x:Name="hola"  Source="{Binding Source={StaticResource DocumentosViewModel}, Path=ListarDocumentos, UpdateSourceTrigger=PropertyChanged}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Tipo"/>
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

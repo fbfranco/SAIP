@@ -1,10 +1,9 @@
-﻿using SAIP.Model.BusinessObject;
+﻿using SAIP.BusinessObject;
 using SAIP.Model.ListaModel;
-using SAIP.Views;
-using SAIP.Views.ViewContents;
+using SAIP.View.Windows;
+using SAIP.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -114,7 +113,7 @@ namespace SAIP.ViewModel
         }
         private void _btnNuevoUsuario_Click(object obj)
         {
-            winUsuarios ventana = new winUsuarios();
+            UsuariosWindow ventana = new UsuariosWindow();
             ventana.ShowDialog();
         }
         private void Usuarios_UsuarioChanged(object sender, System.EventArgs e)
