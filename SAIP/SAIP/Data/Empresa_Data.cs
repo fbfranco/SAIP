@@ -44,7 +44,7 @@ namespace SAIP.Data
                         Rubro = (string)item["rubro"],
                         Encargado = (string)item["encargado"],
                         Aniversario = (DateTime)item["aniversario"],
-                        Logo = item["logo"].Equals("") ? Accesoria.ByteToImage((byte[])item["logo"]) : new BitmapImage(new Uri("pack://application:,,,/Assets/images/dashboard/fondoLogin.jpg", UriKind.Absolute))
+                        Logo = item["logo"].Equals("") ? Accesoria.ByteToImage((byte[])item["logo"]) : new BitmapImage(new Uri("pack://application:,,,/Resource/Images/Background/fondoLogin.jpg", UriKind.Absolute))
                     };
                     Empresa.Add(obj);
                 }

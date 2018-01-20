@@ -1,5 +1,7 @@
 ﻿using SAIP.BusinessObject;
+using SAIP.Helpers;
 using SAIP.Model;
+using SAIP.Service.DialogService;
 using SAIP.View.Windows;
 using SAIP.ViewModel.Base;
 using System;
@@ -15,43 +17,35 @@ namespace SAIP.ViewModel
 {
     public class Login_ViewModel : ViewModelBase
     {
-        #region Singleton
+        #region SINGLETON
         private static Login_ViewModel Instance;
         public static Login_ViewModel GetInstance()
         {
-            if (Instance == null)
-            {
-                Instance = new Login_ViewModel();
-            }
-            return Instance;
+            var x = Instance == null ? new Login_ViewModel() : Instance;
+            return x;
         }
         #endregion
 
-        #region Constructor de la clase
-
+        #region CONSTRUCTOR
         public Login_ViewModel()
         {
             Login = new Login_BusinessObject();
             Login.UserChanged += new EventHandler(login_UserChanged);
             LoginCommand = new RelayCommand(Singin);
-            UpdateBindingGroup = new BindingGroup { Name = "Group1" };
         }
-
         #endregion
 
-        #region Fields(Campos)
-
+        #region CAMPOS
         Login_BusinessObject Login;
         ObservableCollection<Login_Model> _UserLogueado;
-        BindingGroup _UpdateBindingGroup;
         private string _v1;
-        public static string Username;
-        public static string Password;
         public static int IdUsuario;
+        public static string Username = "";
+        public static string Password="";
         #endregion
 
-        #region Propiedades de la Clase
-
+        #region MÉTODOS O PROPIEDADES
+        public RelayCommand LoginCommand { get; set; }
         public ObservableCollection<Login_Model> UserLogueado
         {
             get
@@ -59,66 +53,40 @@ namespace SAIP.ViewModel
                 return _UserLogueado;
             }
         }
-        public RelayCommand LoginCommand { get; set; }
-        public BindingGroup UpdateBindingGroup
-        {
-            get
-            {
-                return _UpdateBindingGroup;
-            }
-            set
-            {
-                if (_UpdateBindingGroup != value)
-                {
-                    _UpdateBindingGroup = value;
-                    RaisePropertyChanged("UpdateBindingGroup");
-                }
-            }
-        }
         public string V1
         {
             get { if (_v1 == null) _v1 = "Usuario"; return _v1; }
             set { _v1 = value; RaisePropertyChanged("V1"); }
         }
-
-
         #endregion
 
         #region Commands
 
         private void Singin(object obj)
         {
-            //Recibir la Contraseña de la Vista
             PasswordBox Mypass = obj as PasswordBox;
             var parameter = Mypass.Password;
 
-            //Validar Campos
             if (parameter.Equals(""))
             {
-                MessageBox.Show("Los campos no se llenaron correctamente","SAIP",MessageBoxButton.OK,MessageBoxImage.Exclamation);
+                DialogService.Instance.MostrarMensaje("Los campos no se llenaron correctamente", "SAIP", "Ok", "Exclamation");
             }
             else
             {
-                //Enviar los parámetros a la función Login para llenar el ObservableCollecction
                 _UserLogueado = new ObservableCollection<Login_Model>(Login.GetUserLogin(V1, parameter));
 
                 if (_UserLogueado.Count == 0)
                 {
-                    MessageBox.Show("El Usuario o Contraseña ingresados no son correctos", "SAIP", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    DialogService.Instance.MostrarMensaje("El Usuario o Contraseña ingresados no son correctos", "SAIP","Ok", "Exclamation");
                 }
                 else
                 {
-                    //Pasar Usuario y Contraseña a Campos Static para su uso en la Venta Principal
                     Username = V1;
                     Password = parameter;
                     IdUsuario = UserLogueado[0].IdUsuario;
 
-                    //Ocultar Ventana Login
-                    var ventana = Application.Current.Windows.OfType<Window>().Where(w => w.Name == "View_Login").SingleOrDefault<Window>();
-                    ventana.Hide();
-
-                    //Mostrar Ventana Principal
-                    MainWindow.GetInstance().Show();
+                    DialogService.Instance.CerrarVentana("View_Login");
+                    MainWindow.GetInstance.Show();
                 }
             }
 

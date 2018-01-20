@@ -24,7 +24,7 @@ namespace SAIP.ViewModel
             btnCancelar_Click = new RelayCommand(_btnCancelar_Click);
             btnEliminar_Click = new RelayCommand(_btnEliminar_Click);
             btnGuardar_Click = new RelayCommand(_btnGuardar_Click);
-            btnClosing_Click = new RelayCommand(_btnClosing_Click);
+            
         }
         #endregion
 
@@ -71,7 +71,6 @@ namespace SAIP.ViewModel
         public RelayCommand btnEditar_Click { get; set; }
         public RelayCommand btnCancelar_Click { get; set; }
         public RelayCommand btnEliminar_Click { get; set; }
-        public RelayCommand btnClosing_Click { get; set; }
         public RelayCommand btnGuardar_Click { get; set; }
         #endregion
 
@@ -157,13 +156,6 @@ namespace SAIP.ViewModel
                     }
                 }
             }
-        }
-
-        /******Evento Click del Button Closing******/
-        private void _btnClosing_Click(object obj)
-        {
-            if (DialogService.Instance.MostrarMensaje("¿Esta seguro que desea salir del Sistema?", "SAIP", "YesNo", "Question") == "Yes")
-                DialogService.Instance.CerrarVentana("VentanaPrincipal");
         }
         #endregion
     }

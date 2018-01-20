@@ -53,7 +53,7 @@
                             <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/maximizar.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Command="{Binding Source={StaticResource DocumentosViewModel},Path=btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
+                    <Button Command="{Binding Source={StaticResource MainViewModel},Path=btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
                         <Button.Background>
                             <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/cerrar.png"/>
                         </Button.Background>
@@ -951,6 +951,9 @@
                                     <Label Grid.Row="0" Content="Seleccione una Sucursal" Foreground="White" FontFamily="Georgia" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
                                     <Border Grid.Row="1" Height="306" Width="460" BorderThickness="1" BorderBrush="#7FFFFFFF" CornerRadius="5" Margin="0">
                                         <WrapPanel Name="ContenedorWrap" ScrollViewer.CanContentScroll="True">
+                                            <ItemsControl ItemTemplate="{DynamicResource hola}" ItemsSource="{Binding Source={StaticResource DocumentosViewModel}, Path=ListarDocumentos}">
+                                                
+                                            </ItemsControl>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Loaded">
                                                     <i:InvokeCommandAction Command="{Binding LoadAccesos}"/>

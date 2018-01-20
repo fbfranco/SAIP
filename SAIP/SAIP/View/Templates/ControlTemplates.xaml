@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ViewModels="clr-namespace:SAIP.ViewModel"
+                    xmlns:local="clr-namespace:SAIP.View.Templates">
+
+    <ViewModels:Documentos_ViewModel x:Key="MainViewModels"/>
+
+    <DataTemplate x:Key="hola">
+        <StackPanel>
+            <Button Content="{Binding Nombre}" Height="40" Width="100"/>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>

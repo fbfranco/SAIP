@@ -90,10 +90,10 @@
     <Compile Include="Data\Sucursal_Data.cs" />
     <Compile Include="Helpers\Accesoria.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\ViewInstances.cs" />
     <Compile Include="Model\AccesoSucursal_Model.cs" />
     <Compile Include="Model\Documentos_Model.cs" />
     <Compile Include="Model\dtsConexion.cs" />
-    <Compile Include="Model\dtsUsuarios.cs" />
     <Compile Include="Model\Empresa_Model.cs" />
     <Compile Include="Model\ListasModel\ListaUsuario_Model.cs" />
     <Compile Include="Model\Login_Model.cs" />
@@ -169,6 +169,10 @@
     <Page Include="Service\DialogService\WindowContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Templates\ControlTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\DocumentosCtrlU.xaml">
       <Generator>MSBuild:Compile</Generator>

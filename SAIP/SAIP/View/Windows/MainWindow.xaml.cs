@@ -15,13 +15,13 @@ namespace SAIP.View.Windows
     {
         #region Singleton
         private static MainWindow Instance;
-        public static MainWindow GetInstance()
+        public static MainWindow GetInstance
         {
-            if (Instance == null)
+            get
             {
-                Instance = new MainWindow();
+                var x = Instance == null ? new MainWindow() : Instance;
+                return x;
             }
-            return Instance;
         }
         #endregion
 

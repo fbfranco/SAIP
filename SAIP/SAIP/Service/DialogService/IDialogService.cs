@@ -1,4 +1,5 @@
 ﻿using SAIP.ViewModel.Base;
+using System;
 
 namespace SAIP.Service.DialogService
 {
@@ -6,7 +7,7 @@ namespace SAIP.Service.DialogService
     {
         string MostrarMensaje(string contenido, string titulo, string botones, string imagen);
 
-        void MostrarVentana(ViewModelBase viewModel);
+        void MostrarVentana(Object ViewModel);
 
         void CerrarVentana(string nombreVentana);
     }

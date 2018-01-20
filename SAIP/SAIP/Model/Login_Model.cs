@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 
 namespace SAIP.Model
@@ -11,14 +6,12 @@ namespace SAIP.Model
     public class Login_Model : INotifyPropertyChanged
     {
         #region Implemetación de la Interfáz INotifyPropertyChanged 
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyOfPropertyChange(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
 
         #region Campos del Modelo
@@ -31,7 +24,6 @@ namespace SAIP.Model
         #endregion
 
         #region Propiedades del Modelo
-
         public int IdUsuario
         {
             get { return _IdUsuario; }
@@ -52,7 +44,6 @@ namespace SAIP.Model
             get { return _Imagen; }
             set { _Imagen = value; NotifyOfPropertyChange("Imagen"); }
         }
-
         #endregion
     }
 }

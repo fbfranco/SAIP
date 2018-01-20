@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using SAIP.ViewModel.Base;
+using SAIP.Service.DialogService;
+using SAIP.Helpers;
 
 namespace SAIP.ViewModel
 {
@@ -51,6 +53,7 @@ namespace SAIP.ViewModel
             lblSucursal_MouseLeftButtonDown = new RelayCommand(_lblSucursal_MouseLeftButtonDown);
             btnDocumentos_MouseLeftButtonUp = new RelayCommand(_btnDocumentos_MouseLeftButtonUp);
             btnCloseUserControl = new RelayCommand(_btnCloseUserControl);
+            btnClosing_Click = new RelayCommand(_btnClosing_Click);
             //
             //Inicializando Datos por Defecto
             //
@@ -110,6 +113,7 @@ namespace SAIP.ViewModel
             get { return _ControlView; }
             set { _ControlView = value; RaisePropertyChanged("ControlView"); }
         }
+        public RelayCommand btnClosing_Click { get; set; }
         #endregion
 
         #region COMMANDS
@@ -117,32 +121,32 @@ namespace SAIP.ViewModel
         //Cargar los Botones de Sucursales de acuerdo al IdUsuario
         //
         private void CargarSucursales(object obj)
-        {
-            var CtnWrap = MainWindow.GetInstance().ContenedorWrap;
-            var NombreSucursal = "";
-            for (int i = 0; i < SucursalesActivas.Count; i++)
-            {
-                foreach (DataRow item in SucursalesActivas[i])
-                {
-                    NombreSucursal = item[6].ToString();
-                }
+        { 
+            //var CtnWrap = ViewInstances.MainInstance.ContenedorWrap;
+            //var NombreSucursal = "";
+            //for (int i = 0; i < SucursalesActivas.Count; i++)
+            //{
+            //    foreach (DataRow item in SucursalesActivas[i])
+            //    {
+            //        NombreSucursal = item[6].ToString();
+            //    }
 
-                CtnWrap.Children.Add(new Button
-                {
-                    Style = Application.Current.FindResource("StyleBtnSucursal") as Style,
-                    Content = NombreSucursal,
-                    Name = "btnSucursal" + i
-                });
-                var BtnS = CtnWrap.Children[i] as Button;
-                BtnS.CommandParameter = BtnS.Content;
-            }
+            //    CtnWrap.Children.Add(new Button
+            //    {
+            //        Style = Application.Current.FindResource("StyleBtnSucursal") as Style,
+            //        Content = NombreSucursal,
+            //        Name = "btnSucursal" + i
+            //    });
+            //    var BtnS = CtnWrap.Children[i] as Button;
+            //    BtnS.CommandParameter = BtnS.Content;
+            //}
         }
         //
         //Pasar el Nombre de la sucursal para su respectivo manejo en la clase Main_ViewModel
         //
         public void _btnSucursal_Click(object obj)
         {
-            MainWindow.GetInstance().lblSucursal.Text = obj.ToString();
+            ViewInstances.MainInstance.lblSucursal.Text = obj.ToString();
             SliderSideBar(200);
         }
         //
@@ -150,7 +154,7 @@ namespace SAIP.ViewModel
         //
         private void SliderSideBar(int v1)
         {
-            MainWindow MainView = MainWindow.GetInstance();
+            MainWindow MainView = ViewInstances.MainInstance;
             MainView.CDSidebar.Width = new GridLength(v1);
 
             DoubleAnimation SidebarAnimation = new DoubleAnimation();
@@ -181,7 +185,7 @@ namespace SAIP.ViewModel
 
         private void _lblSucursal_MouseLeftButtonDown(object obj)
         {
-            MainWindow.GetInstance().MainContainer.Children.Clear();
+            ViewInstances.MainInstance.MainContainer.Children.Clear();
             SliderSideBar(0);
         }
         private void _btnDocumentos_MouseLeftButtonUp(object obj)
@@ -193,6 +197,12 @@ namespace SAIP.ViewModel
         {
             _ControlView = null;
             RaisePropertyChanged("ControlView");
+        }
+
+        /******Evento Click del Button Closing******/
+        private void _btnClosing_Click(object obj)
+        {
+            if (DialogService.Instance.MostrarMensaje("¿Esta seguro que desea salir del Sistema?", "SAIP", "YesNo", "Question") == "Yes") DialogService.Instance.CerrarVentana("VentanaPrincipal");
         }
         #endregion
     }

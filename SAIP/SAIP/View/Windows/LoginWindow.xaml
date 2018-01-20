@@ -22,25 +22,25 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" CornerRadius="10 10 0 0">
             <Border.Background>
-                <ImageBrush ImageSource="../Assets/images/dashboard/fondoLogin.jpg"/>
+                <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Background/fondoLogin.jpg"/>
             </Border.Background>
             <Border Background="Black" Opacity="0.6" CornerRadius="10 10 0 0">
                 
                 <Grid Background="Transparent"  Name="contentOverAll" MouseLeftButtonDown="contentOverAll_MouseLeftButtonDown" Margin="0">
                     <Button  HorizontalAlignment="Left" Margin="258,10,0,0" VerticalAlignment="Top" Width="12" BorderThickness="0" Height="12" Name="btnCerrar" Click="btnCerrar_Click">
                         <Button.Background>
-                            <ImageBrush ImageSource="../Assets/images/dashboard/cerrar1.png"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/cerrar.png"/>
                         </Button.Background>
                     </Button>
                     <TextBlock HorizontalAlignment="Left" Height="26" Margin="35,110,0,0" TextWrapping="Wrap" Text="SAIP" VerticalAlignment="Top" Width="82" FontWeight="Bold" Foreground="White" FontFamily="Georgia" FontSize="28"/>
                     <Separator HorizontalAlignment="Left" Height="2" Margin="10,140,0,0" VerticalAlignment="Top" Width="252" Background="White"/>
                     <Label Content="Sistema de Administración Integral Pymes" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="268" Height="24" Foreground="#DDFFFFFF" FontFamily="Century Gothic" FontSize="12" FontWeight="Bold"/>
-                    <Image HorizontalAlignment="Left" Margin="110,116,0,34" Width="12" Source="../Assets/images/dashboard/mr.png" RenderTransformOrigin="0.458,0.429">
+                    <Image HorizontalAlignment="Left" Margin="110,116,0,34" Width="12" Source="pack://application:,,,/Resource/Images/Background/mr.png" RenderTransformOrigin="0.458,0.429">
                         <Image.OpacityMask >
-                            <ImageBrush ImageSource="../Assets/images/dashboard/mr.png"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Background/mr.png"/>
                         </Image.OpacityMask>
                     </Image>
-                    <Image SnapsToDevicePixels="True" Source="../Assets/images/dashboard/grafico.png" HorizontalAlignment="Left" Margin="122,116,0,25" Width="104" Stretch="Fill"/>
+                    <Image SnapsToDevicePixels="True" Source="pack://application:,,,/Resource/Images/Background/grafico.png" HorizontalAlignment="Left" Margin="122,116,0,25" Width="104" Stretch="Fill"/>
                 </Grid>
             </Border>
 

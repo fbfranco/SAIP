@@ -1,4 +1,5 @@
-﻿using SAIP.View.Windows;
+﻿using SAIP.Helpers;
+using SAIP.View.Windows;
 using SAIP.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace SAIP.View.UserControls
 
         private void btnCerrar_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.GetInstance().MainContainer.Children.Clear();
+            ViewInstances.MainInstance.MainContainer.Children.Clear();
         }
     }
 }

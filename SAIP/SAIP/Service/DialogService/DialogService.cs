@@ -1,4 +1,4 @@
-﻿using SAIP.ViewModel.Base;
+﻿using System;
 using System.Linq;
 using System.Windows;
 
@@ -24,7 +24,14 @@ namespace SAIP.Service.DialogService
             {
                 App.Current.Shutdown();
             }
-            ventana.Close();
+            else if(nombreVentana.Equals("View_Login"))
+            {
+                    ventana.Hide();
+            }
+            else
+            {
+                ventana.Close();
+            }
            
         }
 
@@ -33,12 +40,13 @@ namespace SAIP.Service.DialogService
             return MessageBox.Show(contenido, titulo, ObtenerBotones(botones), ObtenerImagen(imagen)).ToString();
         }
 
-        public void MostrarVentana(ViewModelBase viewModel)
+        public void MostrarVentana(Object viewModel)
         {
-            var ventana = new WindowContainer() { DataContext = viewModel };
-            ventana.Owner = Application.Current.MainWindow;
-            ventana.ShowInTaskbar = false;
-            ventana.ShowDialog();
+            var x = viewModel.GetType();
+            var ventana = new WindowContainer() { DataContext = x };
+            //ventana.Owner = Application.Current.MainWindow;
+            //ventana.ShowInTaskbar = false;
+            ventana.Show();
         }
 
         private MessageBoxButton ObtenerBotones(string botones)
@@ -144,8 +152,6 @@ namespace SAIP.Service.DialogService
 
             return _imagen;
 
-        }
-    
-            
+        }     
     }
 }
