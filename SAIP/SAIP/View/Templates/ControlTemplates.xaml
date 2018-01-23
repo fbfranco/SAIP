@@ -3,11 +3,20 @@
                     xmlns:ViewModels="clr-namespace:SAIP.ViewModel"
                     xmlns:local="clr-namespace:SAIP.View.Templates">
 
-    <ViewModels:Documentos_ViewModel x:Key="MainViewModels"/>
 
-    <DataTemplate x:Key="hola">
+    <!--Button Sucursal Activa-->
+    <DataTemplate x:Key="Button_SucursalActiva">
         <StackPanel>
-            <Button Content="{Binding Nombre}" Height="40" Width="100"/>
+            <Button Height="140" 
+                    Width="140"
+                    Margin="5"
+                    Background="{StaticResource WordBlueBrush}"
+                    BorderBrush="{StaticResource BorderWordBlueBrush}">
+                <StackPanel>
+                    <Image Width="40" Source="pack://application:,,,/Resource/Images/Background/grafico.png"/>
+                    <TextBlock Name="textBtnSucursal" Text="{Binding Nombre}" Margin="0 10 0 0" Foreground="White" FontFamily="Roboto" FontSize="16" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
     </DataTemplate>
     

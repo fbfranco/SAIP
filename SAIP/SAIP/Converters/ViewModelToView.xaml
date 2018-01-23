@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ViewModel="clr-namespace:SAIP.ViewModel">
+
+    <ViewModel:Login_ViewModel x:Key="LoginVM"/>
+    <ViewModel:Main_ViewModel x:Key="MainVM"/>
+    <ViewModel:Documentos_ViewModel x:Key="DocumentosVM"/>
+    <ViewModel:AccesoSucursal_ViewModel x:Key="AccesoSucursalesVM"/>
+    <!--<ViewModel:Login_ViewModel x:Key="LoginVM"/>
+    <ViewModel:Login_ViewModel x:Key="LoginVM"/>
+    <ViewModel:Login_ViewModel x:Key="LoginVM"/>
+    <ViewModel:Login_ViewModel x:Key="LoginVM"/>-->
+
+</ResourceDictionary>

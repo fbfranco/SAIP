@@ -101,9 +101,6 @@
     <Compile Include="Model\Sucursal_Model.cs" />
     <Compile Include="Service\DialogService\DialogService.cs" />
     <Compile Include="Service\DialogService\IDialogService.cs" />
-    <Compile Include="Service\DialogService\WindowContainer.xaml.cs">
-      <DependentUpon>WindowContainer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\AccesoSucursal_ViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
@@ -162,13 +159,29 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Recursos.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Converters\Converts.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Service\DialogService\WindowContainer.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Converters\ViewModelToView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PathImages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Templates\ControlTemplates.xaml">
       <SubType>Designer</SubType>

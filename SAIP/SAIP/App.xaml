@@ -13,6 +13,12 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="Converters/ViewModelToView.xaml"/>
+                <ResourceDictionary Source="Converters/Converts.xaml"/>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="Styles/PathImages.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollBar.xaml"/>
                 <ResourceDictionary Source="View/Templates/ControlTemplates.xaml"/>
                 
             </ResourceDictionary.MergedDictionaries>
@@ -82,9 +88,7 @@
 
             <!--HELPERS-->
 
-            <conv:BooleanToVisibilityConverter x:Key="BoolToVist"/>
-            <conv:SelectedItemToBinding x:Key="SelectedToBinding"/>
-            <conv:StudentConverter x:Key="studentParameterConverter"/>
+            
 
             <!--ESTILOS-->
 
@@ -167,116 +171,9 @@
             
             
             
-            <!--COLORES-->
-
-
-            <Color x:Key="WordBlue">#FF112255</Color>
             
-            <SolidColorBrush x:Key="BorderColorPanelStandar" Color="#FFB9B9FF" />
-            <SolidColorBrush x:Key="WordBlueBrush" Color="{StaticResource WordBlue}" />
-            <LinearGradientBrush x:Key="BackgroundTitleBar" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                <GradientStop Color="#FF020A29" Offset="0"/>
-                <GradientStop Color="#FF0A2583" Offset="0.896"/>
-                <GradientStop Color="#FE020A29" Offset="1"/>
-            </LinearGradientBrush>
 
-            <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
-                <Setter Property="OverridesDefaultStyle" Value="true"/>
-                <Setter Property="IsTabStop" Value="false"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Thumb}">
-                            <Border x:Name="rectangle"
-                                SnapsToDevicePixels="True"
-                                Background="{StaticResource WordBlueBrush}"
-                                CornerRadius="3"
-                                Opacity="0.2"
-                                Height="{TemplateBinding Height}"
-                                Width="{TemplateBinding Width}"/>
-                            <ControlTemplate.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="1" Duration="0:0:0.3" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="Opacity" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="0.2" Duration="0:0:0.3" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="Opacity" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Name="MyScrollBar" TargetType="{x:Type ScrollBar}">
-                <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
-                <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
-                <Setter Property="Width" Value="8"/>
-                <Setter Property="MinWidth" Value="{Binding Width, RelativeSource={RelativeSource Self}}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ScrollBar}">
-                            <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="Transparent">
-
-                                <Border Padding="0 10">
-                                    <Track x:Name="PART_Track"
-                               IsDirectionReversed="true"
-                               IsEnabled="{TemplateBinding IsMouseOver}"
-                               Width="5"
-                               HorizontalAlignment="Center">
-                                        <Track.DecreaseRepeatButton>
-                                            <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageUpCommand}" />
-                                        </Track.DecreaseRepeatButton>
-                                        <Track.IncreaseRepeatButton>
-                                            <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageDownCommand}" />
-                                        </Track.IncreaseRepeatButton>
-                                        <Track.Thumb>
-                                            <Thumb Style="{StaticResource ScrollBarThumb}" />
-                                        </Track.Thumb>
-                                    </Track>
-                                </Border>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="Orientation" Value="Horizontal">
-                        <Setter Property="Width" Value="Auto"/>
-                        <Setter Property="MinWidth" Value="0"/>
-                        <Setter Property="Height" Value="14"/>
-                        <Setter Property="MinHeight" Value="{Binding Height, RelativeSource={RelativeSource Self}}"/>
-                        <Setter Property="Margin" Value="0 -14 0 0" />
-
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                                    <Grid x:Name="Bg" SnapsToDevicePixels="true">
-                                        <Track x:Name="PART_Track"
-                                    IsEnabled="{TemplateBinding IsMouseOver}"
-                                    Height="6">
-                                            <Track.DecreaseRepeatButton>
-                                                <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageLeftCommand}"/>
-                                            </Track.DecreaseRepeatButton>
-                                            <Track.IncreaseRepeatButton>
-                                                <RepeatButton Opacity="0" Command="{x:Static ScrollBar.PageRightCommand}"/>
-                                            </Track.IncreaseRepeatButton>
-                                            <Track.Thumb>
-                                                <Thumb Style="{StaticResource ScrollBarThumb}" />
-                                            </Track.Thumb>
-                                        </Track>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -14,15 +14,7 @@ namespace SAIP.View.Windows
     public partial class MainWindow : Window
     {
         #region Singleton
-        private static MainWindow Instance;
-        public static MainWindow GetInstance
-        {
-            get
-            {
-                var x = Instance == null ? new MainWindow() : Instance;
-                return x;
-            }
-        }
+        public static MainWindow Instance;
         #endregion
 
         #region Constructor

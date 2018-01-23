@@ -17,16 +17,13 @@ namespace SAIP.Service.DialogService
             internal set { _Instance = value; }
         }
 
+        /******Cerrar Ventanta******/
         public void CerrarVentana(string nombreVentana)
         {
             var ventana = Application.Current.Windows.OfType<Window>().Where(w => w.Name == nombreVentana).SingleOrDefault<Window>();
             if (nombreVentana.Equals("VentanaPrincipal"))
             {
                 App.Current.Shutdown();
-            }
-            else if(nombreVentana.Equals("View_Login"))
-            {
-                    ventana.Hide();
             }
             else
             {
@@ -35,20 +32,21 @@ namespace SAIP.Service.DialogService
            
         }
 
+        /******Ocultar Ventana******/
+        public void OcultarVentana(string nombreVentana)
+        {
+            var ventana = Application.Current.Windows.OfType<Window>().Where(w => w.Name == nombreVentana).SingleOrDefault<Window>();
+            ventana.Hide();
+
+        }
+
+        /******Mostrar Mensaje******/
         public string MostrarMensaje(string contenido, string titulo, string botones, string imagen)
         {
             return MessageBox.Show(contenido, titulo, ObtenerBotones(botones), ObtenerImagen(imagen)).ToString();
         }
 
-        public void MostrarVentana(Object viewModel)
-        {
-            var x = viewModel.GetType();
-            var ventana = new WindowContainer() { DataContext = x };
-            //ventana.Owner = Application.Current.MainWindow;
-            //ventana.ShowInTaskbar = false;
-            ventana.Show();
-        }
-
+        /******Obtener Botones******/
         private MessageBoxButton ObtenerBotones(string botones)
         {
             MessageBoxButton _botones = new MessageBoxButton();
@@ -85,6 +83,7 @@ namespace SAIP.Service.DialogService
 
         }
 
+        /******Obtener Imagen******/
         private MessageBoxImage ObtenerImagen(string imagen)
 
         {

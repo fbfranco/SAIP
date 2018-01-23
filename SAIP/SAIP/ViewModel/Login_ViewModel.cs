@@ -2,15 +2,11 @@
 using SAIP.Helpers;
 using SAIP.Model;
 using SAIP.Service.DialogService;
-using SAIP.View.Windows;
 using SAIP.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace SAIP.ViewModel
@@ -31,7 +27,19 @@ namespace SAIP.ViewModel
         {
             Login = new Login_BusinessObject();
             Login.UserChanged += new EventHandler(login_UserChanged);
+
             LoginCommand = new RelayCommand(Singin);
+            btnCerrar_Click = new RelayCommand(_btnCerrar_Click);
+            TextUsuario_GotFocus = new RelayCommand(_TextUsuario_GotFocus);
+            TextUsuario_LostFocus = new RelayCommand(_TextUsuario_LostFocus);
+            TextPasswordO_GotFocus = new RelayCommand(_TextPasswordO_GotFocus);
+            TextPassword_LostFocus = new RelayCommand(_TextPassword_LostFocus);
+
+            _v1 = "Usuario";
+            _ColorText = Application.Current.FindResource("SC_FontTitlePanel");
+            _PasswordBoxFocus = false;
+            _TextPasswordFocus = false;
+            _PasswordBoxVisibility = false;
         }
         #endregion
 
@@ -42,10 +50,23 @@ namespace SAIP.ViewModel
         public static int IdUsuario;
         public static string Username = "";
         public static string Password="";
+        private object _ColorText;
+        private Boolean _PasswordBoxFocus;
+        private Boolean _TextPasswordFocus;
+        private Boolean _PasswordBoxVisibility;
+        private Boolean _TextPasswordVisibility;
         #endregion
 
         #region MÉTODOS O PROPIEDADES
+        /*******Comandos******/
         public RelayCommand LoginCommand { get; set; }
+        public RelayCommand btnCerrar_Click { get; set; }
+        public RelayCommand TextUsuario_GotFocus { get; set; }
+        public RelayCommand TextUsuario_LostFocus { get; set; }
+        public RelayCommand TextPasswordO_GotFocus { get; set; }
+        public RelayCommand TextPassword_LostFocus { get; set; }
+
+        /*******ObservableColleccions******/
         public ObservableCollection<Login_Model> UserLogueado
         {
             get
@@ -53,15 +74,50 @@ namespace SAIP.ViewModel
                 return _UserLogueado;
             }
         }
+
+        /*******Otros Campos******/
+        public object ColorText
+        {
+            get { return _ColorText; }
+            set { _ColorText = value; RaisePropertyChanged("ColorText"); }
+        }
         public string V1
         {
-            get { if (_v1 == null) _v1 = "Usuario"; return _v1; }
+            get
+            {
+                if (_v1.Equals("Usuario"))
+                {
+                    _ColorText = Application.Current.FindResource("SC_FontTitlePanel");
+                    RaisePropertyChanged("ColorText");
+                }
+                return _v1;
+            }
             set { _v1 = value; RaisePropertyChanged("V1"); }
+        }
+        public Boolean PasswordBoxFocus
+        {
+            get { return _PasswordBoxFocus; }
+            set { _PasswordBoxFocus = value; RaisePropertyChanged("PasswordBoxFocus"); }
+        }
+        public Boolean TextPasswordFocus
+        {
+            get { return _TextPasswordFocus; }
+            set { _TextPasswordFocus = value; RaisePropertyChanged("TextPasswordFocus"); }
+        }
+        public Boolean PasswordBoxVisibility
+        {
+            get { return _PasswordBoxVisibility; }
+            set { _PasswordBoxVisibility = value; RaisePropertyChanged("PasswordBoxVisibility"); }
+        }
+        public Boolean TextPasswordVisibility
+        {
+            get { return _TextPasswordVisibility = _PasswordBoxVisibility == true ? false : true; }
+            set { _TextPasswordVisibility = value; RaisePropertyChanged("TextPasswordVisibility"); }
         }
         #endregion
 
-        #region Commands
-
+        #region COMMANDS
+        /******Evento para Loguearse al Sistema******/
         private void Singin(object obj)
         {
             PasswordBox Mypass = obj as PasswordBox;
@@ -85,12 +141,74 @@ namespace SAIP.ViewModel
                     Password = parameter;
                     IdUsuario = UserLogueado[0].IdUsuario;
 
-                    DialogService.Instance.CerrarVentana("View_Login");
-                    MainWindow.GetInstance.Show();
+                    DialogService.Instance.OcultarVentana("View_Login");
+                    ViewInstances.MainInstance.Show();
                 }
             }
 
         }
+
+        /******Evento Click sobre formulario de Login******/
+        private void _btnCerrar_Click(object obj)
+        {
+            DialogService.Instance.CerrarVentana("View_Login");
+        }
+
+        /******Evento GotFocus del textUsuario******/
+        private void _TextUsuario_GotFocus(object obj)
+        {
+            if (V1.Equals("Usuario"))
+            {
+                _v1 = "";
+                _ColorText = Application.Current.FindResource("SC_FontLabel");
+                RaisePropertyChanged("V1");
+                RaisePropertyChanged("ColorText");
+            }
+        }
+
+        /******Evento LostFocus del textUsuario******/
+        private void _TextUsuario_LostFocus(object obj)
+        {
+            if (V1.Equals(""))
+            {
+                _v1 = "Usuario";
+                _ColorText = Application.Current.FindResource("SC_FontTitlePanel");
+                RaisePropertyChanged("V1");
+                RaisePropertyChanged("ColorText");
+            }
+        }
+
+        /******Evento GotFocus del textPassword******/
+        private void _TextPasswordO_GotFocus(object obj)
+        {
+            _PasswordBoxVisibility = true;
+            RaisePropertyChanged("PasswordBoxVisibility");
+            RaisePropertyChanged("TextPasswordVisibility");
+
+            _PasswordBoxFocus = true;
+            _TextPasswordFocus = false;
+            RaisePropertyChanged("TextPasswordFocus");
+            RaisePropertyChanged("PasswordBoxFocus");
+        }
+
+        /******Evento LostFocus del textPassword******/
+        private void _TextPassword_LostFocus(object obj)
+        {
+            var x = obj as PasswordBox;
+            if (x.Password.Equals(""))
+            {
+                _PasswordBoxVisibility = false;
+                RaisePropertyChanged("PasswordBoxVisibility");
+                RaisePropertyChanged("TextPasswordVisibility");
+
+                _PasswordBoxFocus = false;
+                _TextPasswordFocus = false;
+                RaisePropertyChanged("TextPasswordFocus");
+                RaisePropertyChanged("PasswordBoxFocus");
+            }
+        }
+
+        /******Notificar los cambios al Modelo******/
         private void login_UserChanged(object sender, EventArgs e)
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => { RaisePropertyChanged("UserLogueado"); }));
