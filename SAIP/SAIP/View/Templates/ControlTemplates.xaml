@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ViewModels="clr-namespace:SAIP.ViewModel"
-                    xmlns:local="clr-namespace:SAIP.View.Templates">
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Converters/ViewModelToView.xaml"/>
+        <ResourceDictionary Source="../../Styles/PathImages.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <!--Button Sucursal Activa-->
     <DataTemplate x:Key="Button_SucursalActiva">
@@ -11,13 +14,15 @@
                     Width="140"
                     Margin="5"
                     Background="{StaticResource WordBlueBrush}"
-                    BorderBrush="{StaticResource BorderWordBlueBrush}">
+                    BorderBrush="{StaticResource BorderWordBlueBrush}"
+                    Command="{Binding Source={StaticResource MainVM}, Path=btnSucursal_Click}"
+                    CommandParameter="{Binding ElementName=textBtnSucursal, Path=Text}">
                 <StackPanel>
-                    <Image Width="40" Source="pack://application:,,,/Resource/Images/Background/grafico.png"/>
-                    <TextBlock Name="textBtnSucursal" Text="{Binding Nombre}" Margin="0 10 0 0" Foreground="White" FontFamily="Roboto" FontSize="16" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <Image Width="40" Source="{DynamicResource Img_BgLogo}"/>
+                    <TextBlock Name="textBtnSucursal" Text="{Binding [RazonSocial]}" Margin="0 10 0 0" Foreground="White" FontFamily="{DynamicResource ParPrimary}" FontSize="16" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Button>
         </StackPanel>
     </DataTemplate>
-    
+
 </ResourceDictionary>

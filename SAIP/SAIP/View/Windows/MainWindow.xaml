@@ -20,8 +20,13 @@
         Background="Transparent"
         FontFamily="{DynamicResource MaterialDesignFont}" 
         AllowDrop="True"
-        Name="VentanaPrincipal">
-
+        Name="VentanaPrincipal"
+        DataContext="{Binding Source={StaticResource MainVM}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="StateChanged">
+            <i:InvokeCommandAction Command="{Binding WindowState}" CommandParameter="{Binding ElementName=VentanaPrincipal}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -30,44 +35,49 @@
         <Border x:Name="Barra_Titulo" Grid.Row="0" 
                 CornerRadius="10,10,0,0"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" 
-                Background="#FF00358C">
+                Background="{DynamicResource BackgroundTitleBar}">
             <Grid >
-                <TextBlock HorizontalAlignment="Left" Height="26" Margin="89,10,0,0" TextWrapping="Wrap" Text="SAIP" VerticalAlignment="Top" Width="82" FontWeight="Bold" Foreground="White" FontFamily="Georgia" FontSize="28"/>
+                <TextBlock HorizontalAlignment="Left" Height="26" Margin="89,10,0,0" TextWrapping="Wrap" Text="SAIP" VerticalAlignment="Top" Width="82" FontWeight="Bold" Foreground="White" FontFamily="{DynamicResource TitlePrimary}" FontSize="28"/>
                 <Separator HorizontalAlignment="Left" Height="2" Margin="20,40,0,0" VerticalAlignment="Top" Width="252" Background="White"/>
-                <Label Content="Sistema de Administración Integral Pymes" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" Width="268" Height="32" Foreground="#DDFFFFFF" FontFamily="Century Gothic" FontSize="12" FontWeight="Bold"/>
-                <Image HorizontalAlignment="Left" Margin="164,12,0,44" Width="16" Source="pack://application:,,,/Resource/Images/Background/mr.png" RenderTransformOrigin="0.458,0.429">
-                    <Image.OpacityMask >
-                        <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Background/mr.png"/>
-                    </Image.OpacityMask>
-                </Image>
-                <Image Source="pack://application:,,,/Resource/Images/Background/grafico.png" HorizontalAlignment="Left" Margin="167,13,0,34" Width="28"/>
-
+                <Label Content="Sistema de Administración Integral Pymes" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" Width="268" Height="32" Foreground="#DDFFFFFF" FontFamily="{DynamicResource TitleSecondary}" FontSize="12" FontWeight="Bold"/>
+                <Image HorizontalAlignment="Left" Margin="164,12,0,44" Width="16" Source="{DynamicResource Img_BgMR}" RenderTransformOrigin="0.458,0.429"/>
+                <Image Source="{DynamicResource Img_BgLogo}" HorizontalAlignment="Left" Margin="167,13,0,34" Width="28"/>
                 <StackPanel Margin="0 0 10 0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <Button x:Name="btnMinimizar" Click="btnMinimizar_Click" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0">
+                    <Button x:Name="btnMinimizar" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnMinimizar}" CommandParameter="{Binding ElementName=VentanaPrincipal}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <Button.Background>
-                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/minimizar.png"/>
+                            <ImageBrush ImageSource="{DynamicResource Img_BtnMinimizar}"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnMaximizar" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0" Click="btnMaximizar_Click">
+                    <Button x:Name="btnMaximizar" BorderThickness="0" Width="30" Height="30" Margin="0 0 2 0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnMaximizar}" CommandParameter="{Binding ElementName=VentanaPrincipal}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <Button.Background>
-                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/maximizar.png"/>
+                            <ImageBrush ImageSource="{Binding ImgStates}"/>
                         </Button.Background>
                     </Button>
-                    <Button Command="{Binding Source={StaticResource MainViewModel},Path=btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
+                    <Button Command="{Binding btnClosing_Click}" BorderThickness="0" Width="30" Height="30">
                         <Button.Background>
-                            <ImageBrush ImageSource="pack://application:,,,/Resource/Images/Buttons/cerrar.png"/>
+                            <ImageBrush ImageSource="{DynamicResource Img_BtnCerrar}"/>
                         </Button.Background>
                     </Button>
                 </StackPanel>
             </Grid>
         </Border>
-        <Border x:Name="WindowPrincipal" Grid.Row="1" CornerRadius="0,0,10,11">
+        <Border x:Name="WindowPrincipal" Grid.Row="1" CornerRadius="0,0,10,11" Visibility="{Binding WindowVisibility, Converter={StaticResource BoolToVist}}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="CDSidebar" Width="{Binding WidthSideBar}"/>
+                    <ColumnDefinition x:Name="CDSidebar" Width="{Binding ElementName=SideBar, Path=Width, UpdateSourceTrigger=PropertyChanged}"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border x:Name="SideBar" Grid.Column="0" DataContext="{Binding Source={StaticResource MainViewModel}}" Background="#FF1E1E1E" CornerRadius="0,0,0,10" HorizontalAlignment="Left">
+                <Border x:Name="SideBar" Width="{Binding WidthSideBar}" Grid.Column="0" Background="#FF1E1E1E" CornerRadius="0,0,0,10" HorizontalAlignment="Left">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="170"/>
@@ -82,7 +92,7 @@
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <Label x:Name="lblUsuario" Content="{Binding DatosUsuarioLogueado/UserName}"  VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Center" Cursor="Hand" FontWeight="Bold" FontSize="14" Margin="0,110,0,0"/>
-                                <TextBlock Name="lblSucursal" Text="{Binding NombreSucursal, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Center" Cursor="Hand" FontWeight="Bold" FontSize="12" TextWrapping="Wrap" TextAlignment="Center" ToolTip="Click para cambiar de Sucursal" MinWidth="100">
+                                <TextBlock Name="lblSucursal" Text="{Binding NombreSucursal}" Margin="0,134,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Center" Cursor="Hand" FontWeight="Bold" FontSize="12" TextWrapping="Wrap" TextAlignment="Center" ToolTip="Click para cambiar de Sucursal" MinWidth="100">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding lblSucursal_MouseLeftButtonDown}"/>
@@ -103,7 +113,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnAdministracion" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnAdministracion">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnAdministracion}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -118,12 +143,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/administracion.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarAdministracion}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Administración" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnDetalleCaja" Height="25">
+                                        <Grid Grid.Row="1" x:Name="btnDetalleCaja">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnDetalleCaja}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -138,12 +179,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Detalle de Caja" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnOperaciones" Height="25">
+                                        <Grid Grid.Row="2" x:Name="btnOperaciones">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnOperaciones}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -158,12 +215,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Operaciones" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnCtasxPagar" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnCtasxPagar">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnCtasxPogar}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -178,12 +251,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Cuentas por Pagar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnCtasxCobrar" Height="25">
+                                        <Grid Grid.Row="4"  x:Name="btnCtasxCobrar">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnCtasxCobrar}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -198,7 +287,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Cuentas por Cobrar" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -213,7 +302,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnCompras" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnCompras">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnCompras}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -228,12 +332,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/compras.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarCompras}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnComprasF" Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnComprasF">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnComprasF}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -248,12 +368,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnConsultaCompras" Height="25">
+                                        <Grid Grid.Row="2"  x:Name="btnConsultaCompras">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnConsultaCompras}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -268,12 +404,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Consulta Compras" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnProveedores" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnProveedores">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnProveedores}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -288,7 +440,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Proveedores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -303,7 +455,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnVentas" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnVentas">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnVentas}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -318,12 +485,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/ventas.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarVentas}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnVentasF" Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnVentasF">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnVentasF}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -338,12 +521,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnConsultaVentas" Height="25">
+                                        <Grid Grid.Row="2"  x:Name="btnConsultaVentas">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnConsultaVentas}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -358,12 +557,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Consulta Ventas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnClientes" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnClientes">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnClientes}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -378,7 +593,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Clientes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -397,7 +612,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnAlmacen" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnAlmacen">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnAlmacen}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -412,12 +642,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/almacen.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarAlmacen}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Almacén" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnAlmacenes"  Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnAlmacenes">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnAlmacenes}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -432,12 +678,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Almacenes" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnProductos" Height="25">
+                                        <Grid Grid.Row="2"  x:Name="btnProductos">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnProductos}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -452,12 +714,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Productos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnKardex" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnKardex">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnKardex}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -472,12 +750,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Kárdex" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnInventario" Height="25">
+                                        <Grid Grid.Row="4"  x:Name="btnInventario">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnInventario}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -492,12 +786,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Inventario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="5" Background="#FF2D2D30" x:Name="btnCategorias" Height="25">
+                                        <Grid Grid.Row="5"  x:Name="btnCategorias">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnCategorias}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -512,12 +822,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Categorias" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="6" Background="#FF2D2D30" x:Name="btnMarcas" Height="25">
+                                        <Grid Grid.Row="6"  x:Name="btnMarcas">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnMarcas}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -532,12 +858,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Marcas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="7" Background="#FF2D2D30" x:Name="btnUnidades" Height="25">
+                                        <Grid Grid.Row="7"  x:Name="btnUnidades">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnUnidades}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -552,7 +894,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Unidades" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -568,7 +910,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnContabilidad" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnContabilidad">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnContabilidad}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -583,12 +940,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/contabilidad.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarContabilidad}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Contabilidad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnConceptosContables" Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnConceptosContables">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnConceptosContables}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -603,12 +976,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Conceptos Contables" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnLibroDiario" Height="25">
+                                        <Grid Grid.Row="2"  x:Name="btnLibroDiario">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnLibroDiario}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -623,12 +1012,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Libro Diario" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnLibroMayor" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnLibroMayor">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnLibroMayor}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -643,12 +1048,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Libro Mayor" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnFacturacion" Height="25">
+                                        <Grid Grid.Row="4"  x:Name="btnFacturacion">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnFacturacion}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -663,7 +1084,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Facturación" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -680,7 +1101,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnMantenimiento" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnMantenimiento">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnMantenimiento}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -695,55 +1131,26 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/ajustes.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarMantenimiento}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Mantenimiento" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnEmpresa" Height="25">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
-                                                <Border.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                                        <SkewTransform/>
-                                                        <RotateTransform/>
-                                                        <TranslateTransform/>
-                                                    </TransformGroup>
-                                                </Border.RenderTransform>
-                                                <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
-                                                </Border.Background>
-                                            </Border>
-                                            <Label Grid.Column="1" Content="Empresa" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
-                                        </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnSucursales" Height="25">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
-                                                <Border.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                                        <SkewTransform/>
-                                                        <RotateTransform/>
-                                                        <TranslateTransform/>
-                                                    </TransformGroup>
-                                                </Border.RenderTransform>
-                                                <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
-                                                </Border.Background>
-                                            </Border>
-                                            <Label Grid.Column="1" Content="Sucursales" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
-                                        </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnDocumentos" Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnEmpresa">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
                                             <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                    <i:InvokeCommandAction Command="{Binding Path=btnDocumentos_MouseLeftButtonUp}"/>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnEmpresa}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
@@ -760,12 +1167,100 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Empresa" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="2"  x:Name="btnSucursales">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnSucursales}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Label Grid.Column="1" Content="Sucursales" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
+                                        </Grid>
+                                        <Grid Grid.Row="3"  x:Name="btnDocumentos">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnDocumentos}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" RenderTransformOrigin="0.5,0.5" Margin="30 0 0 0">
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Documentos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="4" Background="#FF2D2D30" x:Name="btnFacturas" Height="25">
+                                        <Grid Grid.Row="4"  x:Name="btnFacturas">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnFacturas}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -780,12 +1275,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Facturas" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="5" Background="#FF2D2D30" x:Name="btnTrabajadores" Height="25">
+                                        <Grid Grid.Row="5"  x:Name="btnTrabajadores">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnTrabajadores}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -800,7 +1311,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Trabajadores" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -815,7 +1326,22 @@
                                             <RowDefinition Height="25"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" x:Name="btnSeguridad" Height="35">
+                                        <Grid Grid.Row="0" x:Name="btnSeguridad">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="35"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSideBar_Click}" CommandParameter="{Binding ElementName=btnSeguridad}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -830,12 +1356,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/seguridad.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarSeguridad}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Seguridad" Foreground="White" VerticalAlignment="Bottom" Margin="-10 0 0 0" FontSize="14" FontWeight="Bold"/>
                                         </Grid>
-                                        <Grid Grid.Row="1" Background="#FF2D2D30" x:Name="btnUsuarios" Height="25">
+                                        <Grid Grid.Row="1"  x:Name="btnUsuarios">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnUsuarios}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -850,12 +1392,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Usuarios" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="2" Background="#FF2D2D30" x:Name="btnPermisos" Height="25">
+                                        <Grid Grid.Row="2"  x:Name="btnPermisos">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnPermisos}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -870,12 +1428,28 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Permisos" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
                                         </Grid>
-                                        <Grid Grid.Row="3" Background="#FF2D2D30" x:Name="btnBackup" Height="25">
+                                        <Grid Grid.Row="3"  x:Name="btnBackup">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Height" Value="25"/>
+                                                    <Setter Property="Background" Value="{DynamicResource Bg_SubItemSb}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource Bg_MouseOverPanel}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnBackup}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition Width="*"/>
@@ -890,7 +1464,7 @@
                                                     </TransformGroup>
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush ImageSource="pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png" Stretch="Uniform"/>
+                                                    <ImageBrush ImageSource="{DynamicResource Img_SideBarPuntoMedio}" Stretch="Uniform"/>
                                                 </Border.Background>
                                             </Border>
                                             <Label Grid.Column="1" Content="Backup" Foreground="White" VerticalAlignment="Bottom" Margin="-5 0 0 0" FontSize="14"/>
@@ -904,11 +1478,16 @@
                 <Border x:Name="ContenedorPrincipal" Grid.Column="1" CornerRadius="0 0 10 0" Background="White">
                     <Grid>
                         <MediaElement x:Name="myMediaElement" Stretch="Fill" UnloadedBehavior="Manual">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MediaOpened">
+                                    <i:InvokeCommandAction Command="{Binding myMediaElement_MediaOpened}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <MediaElement.Triggers>
                                 <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <MediaTimeline x:Name="myMediaTimeLine" Source="Assets/video/Ipad.mp4" Storyboard.TargetName="myMediaElement" RepeatBehavior="Forever"/>
+                                            <MediaTimeline x:Name="myMediaTimeLine" Source="{DynamicResource Video_Bg}" Storyboard.TargetName="myMediaElement" RepeatBehavior="Forever"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
@@ -916,28 +1495,36 @@
                         </MediaElement>
                         <Grid Name="backgroudOverAll" Background="Black" Opacity="0.6"/>
                         <StackPanel Name="home" Orientation="Horizontal" Width="900" HorizontalAlignment="Center">
-                            <Border x:Name="InfoEmpresa" HorizontalAlignment="Center" Margin="50" Height="460" BorderBrush="White" Width="280" BorderThickness="2" CornerRadius="10">
+                            <Border x:Name="InfoEmpresa" 
+                                    HorizontalAlignment="Center" 
+                                    Margin="50" 
+                                    Height="460" 
+                                    BorderBrush="White" 
+                                    Width="280" 
+                                    BorderThickness="2" 
+                                    CornerRadius="10"
+                                    DataContext="{Binding Source={StaticResource EmpresaVM}, Path=Empresas}">
                                 <StackPanel>
                                     <Border Height="160" CornerRadius="10,10,0,0" Panel.ZIndex="10">
                                         <Border.Background>
-                                            <ImageBrush ImageSource="{Binding Logo}"/>
+                                            <ImageBrush ImageSource="{Binding Logo, TargetNullValue={StaticResource Img_BgEmpresa}}"/>
                                         </Border.Background>
                                     </Border>
                                     <StackPanel Margin="0,10,0,5">
-                                        <Label Content="Razón Social:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
-                                        <Label Name="RazonSocial" Content="{Binding RazonSocial}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                        <Label Content="Razón Social:" Foreground="White" Margin="10,0,0,0" FontFamily="{DynamicResource TitlePrimary}" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="RazonSocial" Content="{Binding RazonSocial}" Foreground="White" FontFamily="{DynamicResource ParSecondary}" FontSize="14" Margin="10,0,0,0"/>
                                     </StackPanel>
                                     <StackPanel Margin="0 5 0 5">
-                                        <Label Content="Rubro:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
-                                        <Label Name="Rubro" Content="{Binding Rubro}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                        <Label Content="Rubro:" Foreground="White" Margin="10,0,0,0" FontFamily="{DynamicResource TitlePrimary}" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Rubro" Content="{Binding Rubro}" Foreground="White" FontFamily="{DynamicResource ParSecondary}" FontSize="14" Margin="10,0,0,0"/>
                                     </StackPanel>
                                     <StackPanel Margin="0 5 0 5">
-                                        <Label Content="Encargado:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
-                                        <Label Name="Encargado" Content="{Binding Encargado}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                        <Label Content="Encargado:" Foreground="White" Margin="10,0,0,0" FontFamily="{DynamicResource TitlePrimary}" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Encargado" Content="{Binding Encargado}" Foreground="White" FontFamily="{DynamicResource ParSecondary}" FontSize="14" Margin="10,0,0,0"/>
                                     </StackPanel>
                                     <StackPanel Margin="0 5 0 5">
-                                        <Label Content="Aniversario:" Foreground="White" Margin="10,0,0,0" FontFamily="Georgia" FontWeight="Bold" FontSize="16"/>
-                                        <Label Name="Aniversario" Content="{Binding AniversarioFormater}" Foreground="White" FontFamily="Microsoft Sans Serif" FontSize="14" Margin="10,0,0,0"/>
+                                        <Label Content="Aniversario:" Foreground="White" Margin="10,0,0,0" FontFamily="{DynamicResource TitlePrimary}" FontWeight="Bold" FontSize="16"/>
+                                        <Label Name="Aniversario" Content="{Binding AniversarioFormater}" Foreground="White" FontFamily="{DynamicResource ParSecondary}" FontSize="14" Margin="10,0,0,0"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -948,28 +1535,23 @@
                                         <RowDefinition Height="320"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="Seleccione una Sucursal" Foreground="White" FontFamily="Georgia" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                    <Label Grid.Row="0" Content="Seleccione una Sucursal" Foreground="White" FontFamily="{DynamicResource TitlePrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
                                     <Border Grid.Row="1" Height="306" Width="460" BorderThickness="1" BorderBrush="#7FFFFFFF" CornerRadius="5" Margin="0">
                                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemTemplate="{DynamicResource Button_SucursalActiva}" ItemsSource="{Binding Source={StaticResource DocumentosViewModel}, Path=ListarDocumentos}">
+                                            <ItemsControl ItemTemplate="{DynamicResource Button_SucursalActiva}" ItemsSource="{Binding SucursalesActivas}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                             </ItemsControl>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Loaded">
-                                                    <i:InvokeCommandAction Command="{Binding LoadAccesos}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
                                         </ScrollViewer>
                                     </Border>
                                 </Grid>
                             </Border>
                         </StackPanel>
                         <Grid Name="MainContainer">
-                            <ContentControl ContentTemplate="{Binding Source={StaticResource MainViewModel}, Path=ControlView}"/>
+                            <ContentControl ContentTemplate="{Binding ControlView}"/>
                         </Grid>
                     </Grid>
                 </Border>

@@ -24,7 +24,6 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--ENLACES A VIEWMODELS-->
-            <ViewModel:Main_ViewModel x:Key="MainViewModel"/>
             <ViewModel:Sucursal_ViewModel x:Key="SucursalViewModel"/>
             <ViewModel:Roles_ViewModel x:Key="RolesViewModel"/>
             <ViewModel:Documentos_ViewModel x:Key="DocumentosViewModel"/>

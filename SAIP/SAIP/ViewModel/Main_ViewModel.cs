@@ -1,15 +1,14 @@
-﻿using SAIP.Model;
+﻿using SAIP.Animations;
 using SAIP.BusinessObject;
+using SAIP.Model;
+using SAIP.Service.DialogService;
 using SAIP.View.Windows;
+using SAIP.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using SAIP.ViewModel.Base;
-using SAIP.Service.DialogService;
-using SAIP.Helpers;
 
 namespace SAIP.ViewModel
 {
@@ -30,34 +29,28 @@ namespace SAIP.ViewModel
         #region CONSTRUCTOR DE LA CLASE
         public Main_ViewModel()
         {
-            //
-            //Inicialiando Instancias para la comunicación con otras clases
-            //
             Login = new Login_BusinessObject();
             Accesos = new AccesoSucursal_BusinessObject();
-            //
-            //Inicializando Campos del tipo ObservableCollection
-            //
+
             _AccesosSucursales = new ObservableCollection<AccesoSucursal_Model>(Accesos.GetAccesos());
             _SucursalesActivas = new ObservableCollection<DataRow[]>();
-            //
-            //Inicializando Parámetros del Usuario Logueado
-            //
-            UserName = Login_ViewModel.Username;
-            Password = Login_ViewModel.Password;
-            //
-            //Inicializando Eventos para la interacción en del usuario en la Vista
-            //
-            LoadAccesos = new RelayCommand(CargarSucursales);
-            btnSucursal_Click = new RelayCommand(_btnSucursal_Click);
+
             lblSucursal_MouseLeftButtonDown = new RelayCommand(_lblSucursal_MouseLeftButtonDown);
+            myMediaElement_MediaOpened = new RelayCommand(_myMediaElement_MediaOpened);
+            WindowState = new RelayCommand(_WindowState);
+            btnSucursal_Click = new RelayCommand(_btnSucursal_Click);
             btnDocumentos_MouseLeftButtonUp = new RelayCommand(_btnDocumentos_MouseLeftButtonUp);
             btnCloseUserControl = new RelayCommand(_btnCloseUserControl);
             btnClosing_Click = new RelayCommand(_btnClosing_Click);
-            //
-            //Inicializando Datos por Defecto
-            //
+            btnMaximizar = new RelayCommand(_btnMaximizar);
+            btnMinimizar = new RelayCommand(_btnMinimizar);
+            btnSideBar_Click = new RelayCommand(_btnSideBar_Click);
+
+            UserName = Login_ViewModel.Username;
+            Password = Login_ViewModel.Password;
             _WidthSideBar = "0";
+            _WindowVisibility = true;
+            _ImgStates = Application.Current.FindResource("Img_BtnMaximizar");
         }
         #endregion
 
@@ -71,15 +64,23 @@ namespace SAIP.ViewModel
 
         private string UserName;
         private string Password;
-        private DataTemplate _ControlView;
         public static string _WidthSideBar;
         public static string _NombreSucursal;
+        private DataTemplate _ControlView;
+        private Boolean _WindowVisibility;
+        private object _ImgStates;
 
         public RelayCommand lblSucursal_MouseLeftButtonDown { get; set; }
         public RelayCommand LoadAccesos { get; set; }
         public RelayCommand btnSucursal_Click { get; set; }
         public RelayCommand btnDocumentos_MouseLeftButtonUp { get; set; }
         public RelayCommand btnCloseUserControl { get; set; }
+        public RelayCommand myMediaElement_MediaOpened { get; set; }
+        public RelayCommand btnClosing_Click { get; set; }
+        public RelayCommand btnMaximizar { get; set; }
+        public RelayCommand btnMinimizar { get; set; }
+        public RelayCommand WindowState { get; set; }
+        public RelayCommand btnSideBar_Click { get; set; }
         #endregion
 
         #region MÉTODOS O PROPIEDADES DE LA CLASE
@@ -113,90 +114,96 @@ namespace SAIP.ViewModel
             get { return _ControlView; }
             set { _ControlView = value; RaisePropertyChanged("ControlView"); }
         }
-        public RelayCommand btnClosing_Click { get; set; }
+        public Boolean WindowVisibility
+        {
+            get { return _WindowVisibility; }
+            set { _WindowVisibility = value; RaisePropertyChanged("WindowVisibility"); }
+        }
+        public object ImgStates
+        {
+            get { return _ImgStates; }
+            set { _ImgStates = value; RaisePropertyChanged("ImgStates"); }
+        }
+
+
         #endregion
 
         #region COMMANDS
-        //
-        //Cargar los Botones de Sucursales de acuerdo al IdUsuario
-        //
-        private void CargarSucursales(object obj)
-        { 
-            //var CtnWrap = ViewInstances.MainInstance.ContenedorWrap;
-            //var NombreSucursal = "";
-            //for (int i = 0; i < SucursalesActivas.Count; i++)
-            //{
-            //    foreach (DataRow item in SucursalesActivas[i])
-            //    {
-            //        NombreSucursal = item[6].ToString();
-            //    }
-
-            //    CtnWrap.Children.Add(new Button
-            //    {
-            //        Style = Application.Current.FindResource("StyleBtnSucursal") as Style,
-            //        Content = NombreSucursal,
-            //        Name = "btnSucursal" + i
-            //    });
-            //    var BtnS = CtnWrap.Children[i] as Button;
-            //    BtnS.CommandParameter = BtnS.Content;
-            //}
+        /******Cargar el Home al inicio de la reproduccion del MediaElement******/
+        private void _myMediaElement_MediaOpened(object obj)
+        {
+            _WindowVisibility = true;
+            RaisePropertyChanged("WindowVisibility");
         }
-        //
-        //Pasar el Nombre de la sucursal para su respectivo manejo en la clase Main_ViewModel
-        //
+
+        /******Pasar el Nombre de la sucursal para su respectivo manejo en la clase Main_ViewModel******/
         public void _btnSucursal_Click(object obj)
         {
-            ViewInstances.MainInstance.lblSucursal.Text = obj.ToString();
-            SliderSideBar(200);
-        }
-        //
-        //Animación para Ocultar o Mostrar el SideBar
-        //
-        private void SliderSideBar(int v1)
-        {
-            MainWindow MainView = ViewInstances.MainInstance;
-            MainView.CDSidebar.Width = new GridLength(v1);
-
-            DoubleAnimation SidebarAnimation = new DoubleAnimation();
-            SidebarAnimation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 200));
-            SidebarAnimation.From = v1 == 200 ? 0 : 200;
-            SidebarAnimation.To = v1;
-            Storyboard sb = new Storyboard();
-            sb.Children.Add(SidebarAnimation);
-            Storyboard.SetTarget(SidebarAnimation, MainView.SideBar);
-            Storyboard.SetTargetProperty(SidebarAnimation, new PropertyPath("Width"));
-            MainView.SideBar.BeginStoryboard(sb);
-
-            if (v1 == 200)
-            {
-                MainView.myMediaElement.Stop();
-                MainView.myMediaElement.Visibility = Visibility.Hidden;
-                MainView.backgroudOverAll.Visibility = Visibility.Hidden;
-                MainView.home.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                MainView.myMediaElement.Play();
-                MainView.myMediaElement.Visibility = Visibility.Visible;
-                MainView.backgroudOverAll.Visibility = Visibility.Visible;
-                MainView.home.Visibility = Visibility.Visible;
-            }
+            _NombreSucursal = obj.ToString();
+            RaisePropertyChanged("NombreSucursal");
+            _WidthSideBar = "200";
+            RaisePropertyChanged("WidthSideBar");
+            new General_Animations().SliderSideBar_Animations(200);
         }
 
+        /******Evento Click para asignar la sucursal Activada******/
         private void _lblSucursal_MouseLeftButtonDown(object obj)
         {
-            ViewInstances.MainInstance.MainContainer.Children.Clear();
-            SliderSideBar(0);
+            _btnCloseUserControl(null);
+            new General_Animations().SliderSideBar_Animations(0);
         }
+
+        /******Evento Click en el Button Documento******/
         private void _btnDocumentos_MouseLeftButtonUp(object obj)
         {
             _ControlView = App.Current.FindResource("DocumentosView") as DataTemplate;
             RaisePropertyChanged("ControlView");
         }
+
+        /******Evento para Limpiar el Contenedor Principal******/
         private void _btnCloseUserControl(object obj)
         {
             _ControlView = null;
             RaisePropertyChanged("ControlView");
+        }
+
+        /******Minimizar Ventana******/
+        private void _btnMinimizar(object obj)
+        {
+            var x = obj as Window;
+            x.WindowState = System.Windows.WindowState.Minimized;
+        }
+
+        /******Maximizar Ventana******/
+        private int x = 1; 
+        private void _btnMaximizar(object obj)
+        {
+            var y = obj as Window;
+
+            if (x == 1)
+            {
+                y.WindowState = System.Windows.WindowState.Maximized;
+                x = 0;
+            }
+            else
+            {
+                y.WindowState = System.Windows.WindowState.Normal;
+                x = 1;
+            }
+        }
+
+        /******Cambiar Imagen al btnMaximizar******/
+        private void _WindowState(object obj)
+        {
+            var x = obj as Window;
+            _ImgStates = x.WindowState == System.Windows.WindowState.Maximized ? Application.Current.FindResource("Img_BtnRestaurar") : Application.Current.FindResource("Img_BtnMaximizar");
+            RaisePropertyChanged("ImgStates");
+        }
+
+        /******Evento Animar el Sidebar Acordeon******/
+        private void _btnSideBar_Click(object obj)
+        {
+            new General_Animations().Acordeon_Animations(obj);
         }
 
         /******Evento Click del Button Closing******/

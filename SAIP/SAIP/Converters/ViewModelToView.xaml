@@ -6,8 +6,8 @@
     <ViewModel:Main_ViewModel x:Key="MainVM"/>
     <ViewModel:Documentos_ViewModel x:Key="DocumentosVM"/>
     <ViewModel:AccesoSucursal_ViewModel x:Key="AccesoSucursalesVM"/>
+    <ViewModel:Empresa_ViewModel x:Key="EmpresaVM"/>
     <!--<ViewModel:Login_ViewModel x:Key="LoginVM"/>
-    <ViewModel:Login_ViewModel x:Key="LoginVM"/>
     <ViewModel:Login_ViewModel x:Key="LoginVM"/>
     <ViewModel:Login_ViewModel x:Key="LoginVM"/>-->
 

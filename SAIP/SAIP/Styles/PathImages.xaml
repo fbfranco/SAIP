@@ -1,13 +1,32 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:SAIP.Styles">
+                    xmlns:local="clr-namespace:SAIP.Styles"
+                    xmlns:a="clr-namespace:System;assembly=mscorlib"
+                    xmlns:system="clr-namespace:System;assembly=System">
     
     <!--Paht de Imágenes para Buttons-->
     <ImageSource x:Key="Img_BtnCerrar">pack://application:,,,/Resource/Images/Buttons/Cerrar.png</ImageSource>
-
+    <ImageSource x:Key="Img_BtnMinimizar">pack://application:,,,/Resource/Images/Buttons/minimizar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnMaximizar">pack://application:,,,/Resource/Images/Buttons/maximizar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnRestaurar">pack://application:,,,/Resource/Images/Buttons/reajustar.png</ImageSource>
+    
+    <!--Path de Imágenes para SideBar-->
+    <ImageSource x:Key="Img_SideBarPuntoMedio">pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarAdministracion">pack://application:,,,/Resource/Images/MenuSideBar/administracion.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarCompras">pack://application:,,,/Resource/Images/MenuSideBar/compras.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarVentas">pack://application:,,,/Resource/Images/MenuSideBar/ventas.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarAlmacen">pack://application:,,,/Resource/Images/MenuSideBar/almacen.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarContabilidad">pack://application:,,,/Resource/Images/MenuSideBar/contabilidad.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarMantenimiento">pack://application:,,,/Resource/Images/MenuSideBar/ajustes.png</ImageSource>
+    <ImageSource x:Key="Img_SideBarSeguridad">pack://application:,,,/Resource/Images/MenuSideBar/seguridad.png</ImageSource>
+    
     <!--Paht de Imágenes para Backgrounds-->
     <ImageSource x:Key="Img_BgLogin">pack://application:,,,/Resource/Images/Background/fondoLogin.jpg</ImageSource>
     <ImageSource x:Key="Img_BgMR">pack://application:,,,/Resource/Images/Background/mr.png</ImageSource>
     <ImageSource x:Key="Img_BgLogo">pack://application:,,,/Resource/Images/Background/grafico.png</ImageSource>
+    
+    <!--Path de Video-->
+    <system:Uri x:Key="Video_Bg">../../Resource/Video/Ipad.mp4</system:Uri>
+    <system:Uri x:Key="Img_BgEmpresa">../../Resource/Images/Background/fondoLogin.jpg</system:Uri>
 
 </ResourceDictionary>

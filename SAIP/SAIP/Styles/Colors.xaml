@@ -13,8 +13,9 @@
     <Color x:Key="DarkDanger">#FF9B1717</Color>
     <Color x:Key="FontTitlePanel">#FF959595</Color>
     <Color x:Key="FontLabel">#DD000000</Color>
-    <Color x:Key="Information"></Color>
-    <Color x:Key="DarkInformation"></Color>
+    <Color x:Key="SubItemSb">#FF2D2D30</Color>
+    <Color x:Key="MouseOverPanel">#FF3E3E40</Color>
+    <Color x:Key="Transparente">Transparente</Color>
     
     <SolidColorBrush x:Key="BorderColorPanelStandar" Color="{StaticResource WordBlue}" />
     <SolidColorBrush x:Key="WordBlueBrush" Color="{StaticResource WordBlue}"/>
@@ -25,6 +26,9 @@
     <SolidColorBrush x:Key="SC_DarkDanger" Color="{StaticResource DarkDanger}"/>
     <SolidColorBrush x:Key="SC_FontTitlePanel" Color="{StaticResource FontTitlePanel}"/>
     <SolidColorBrush x:Key="SC_FontLabel" Color="{StaticResource FontLabel}"/>
+    <SolidColorBrush x:Key="Bg_SubItemSb" Color="{StaticResource SubItemSb}"/>
+    <SolidColorBrush x:Key="Bg_MouseOverPanel" Color="{StaticResource MouseOverPanel}"/>
+    <SolidColorBrush x:Key="Trans" Color="{StaticResource Transparente}"/>
 
     <LinearGradientBrush x:Key="BackgroundTitleBar" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
         <GradientStop Color="#FF020A29" Offset="0"/>
@@ -33,3 +37,4 @@
     </LinearGradientBrush>
 
 </ResourceDictionary>
+<!--#FF00358C-->
