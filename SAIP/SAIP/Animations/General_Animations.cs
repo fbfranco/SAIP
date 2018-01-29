@@ -141,5 +141,18 @@ namespace SAIP.Animations
             }
 
         }
+
+        public void EfectoDesvanecer(int v1)
+        {
+            DoubleAnimation EfectoDesvanecer = new DoubleAnimation();
+            EfectoDesvanecer.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 500));
+            EfectoDesvanecer.From = MainView.MainContainer.Opacity;
+            EfectoDesvanecer.To = v1;
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(EfectoDesvanecer);
+            Storyboard.SetTarget(EfectoDesvanecer, MainView.MainContainer);
+            Storyboard.SetTargetProperty(EfectoDesvanecer, new PropertyPath("Opacity"));
+            MainView.MainContainer.BeginStoryboard(sb);
+        }
     }
 }

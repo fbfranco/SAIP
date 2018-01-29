@@ -5,13 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="542.482" d:DesignWidth="770.302">
+             d:DesignHeight="542.482" d:DesignWidth="770.302"
+             DataContext="{DynamicResource DocumentosVM}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Source={StaticResource MainVM}, Path=MainContainer_Loaded}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Name="btnCloseUserControl" Grid.Row="0" Template="{StaticResource btnCerrar}"/>
+        <Button Name="btnCloseUserControl" Grid.Row="0" Template="{DynamicResource btnCerrar}"/>
         <Grid Name="ContenedorGeneral" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="450"/>
@@ -19,9 +25,17 @@
             </Grid.ColumnDefinitions>
             <Border Name="ListadoDocumentos" Grid.Column="0" Margin="10" Padding="10" BorderThickness="2" BorderBrush="{StaticResource BorderColorPanelStandar}" CornerRadius="5">
                 <StackPanel>
-                    <TextBlock Text="Lista de Documentos" FontWeight="Bold" Foreground="#FF959595"/>
-                    <DataGrid Name="dtgListaDocumentos" IsReadOnly="True" AutoGenerateColumns="False" SelectedItem="{Binding Source={StaticResource DocumentosViewModel}, Path=SelectedItem, UpdateSourceTrigger=Explicit}" ItemsSource="{Binding Source={StaticResource DocumentosViewModel}, Path=DocumentosAgrupados, UpdateSourceTrigger=PropertyChanged}" Margin="0 20 0 0" CanUserAddRows="False" SelectionMode="Single" MaxHeight="500">
-                        <DataGrid.Template>
+                    <TextBlock Text="Lista de Documentos" FontWeight="Bold" Foreground="{DynamicResource SC_FontTitlePanel}"/>
+                    <DataGrid Name="dtgListaDocumentos" 
+                              IsReadOnly="True" 
+                              AutoGenerateColumns="False" 
+                              SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=Explicit}" 
+                              ItemsSource="{Binding DocumentosAgrupados, UpdateSourceTrigger=PropertyChanged}" 
+                              Margin="0 20 0 0" 
+                              CanUserAddRows="False" 
+                              SelectionMode="Single" 
+                              MaxHeight="500">
+                        <!--<DataGrid.Template>
                             <ControlTemplate TargetType="{x:Type DataGrid}">
                                 <Border Background="{TemplateBinding Background}"
 					                    BorderBrush="{TemplateBinding BorderBrush}"
@@ -94,24 +108,11 @@
                                     </ScrollViewer>
                                 </Border>
                             </ControlTemplate>
-                        </DataGrid.Template>
+                        </DataGrid.Template>-->
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Código" Binding="{Binding Path=IdDocumento}" CellStyle="{StaticResource StyleCell_HAlignment}"/>
                             <DataGridTextColumn Header="Documento" Binding="{Binding Path=Nombre}" CellStyle="{StaticResource StyleCell_VAlignment}"/>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Name="btnEditar" Command="{Binding Source={StaticResource DocumentosViewModel}, Path=btnEditar_Click}" CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}" Background="#FF0B68A6" BorderBrush="#FF093C5F" Width="60" Height="30" Margin="5">
-                                                <Image Source="/SAIP;component/Assets/images/dashboard/editar.png"/>
-                                            </Button>
-                                            <Button Name="btnEliminar" Command="{Binding Source={StaticResource DocumentosViewModel}, Path=btnEliminar_Click}" CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}" Background="#FFBD1212" BorderBrush="#FF760B0B" Width="60" Height="30" Margin="5">
-                                                <Image Source="/SAIP;component/Assets/images/dashboard/eliminar.png"/>
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CellTemplate="{DynamicResource btn_Update_Delete}"/>
                         </DataGrid.Columns>
                         <DataGrid.GroupStyle>
                             <GroupStyle>
@@ -159,7 +160,7 @@
                 <StackPanel>
                     <TextBlock Text="Actualizacion y Registro de Documentos" FontWeight="Bold" Foreground="#FF959595"/>
                     <Border CornerRadius="3" BorderThickness="1,2" Padding="10" Width="280" BorderBrush="{StaticResource BorderColorPanelStandar}" HorizontalAlignment="Left" Margin="0 20 0 0">
-                        <StackPanel DataContext="{Binding Source={StaticResource DocumentosViewModel}, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel DataContext="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Código:" Style="{StaticResource EtiquetasStandar}"/>
                                 <TextBox Name="textCodigo" Text="{Binding IdDocumento}" Width="60" Focusable="False" IsTabStop="False" IsReadOnly="True"/>
@@ -167,12 +168,12 @@
                             <Label Content="Nombre:" Style="{StaticResource EtiquetasStandar}" Margin="0 20 0 0"/>
                             <TextBox Name="textNombre" Text="{Binding Nombre, Mode=OneWay}" Margin="10 0 0 0" Width="230" HorizontalAlignment="Left"/>
                             <Label Content="Tipo de Documento:" Style="{StaticResource EtiquetasStandar}" Margin="0 10 0 0"/>
-                            <ComboBox Name="cboTipoDoc" ItemsSource="{Binding Source={StaticResource DocumentosViewModel}, Path=ItemCboDocumentos}"  SelectedItem="{Binding Tipo, Mode=OneWay}" Margin="10 0 0 0" Width="230" HorizontalAlignment="Left"/>
+                            <ComboBox Name="cboTipoDoc" ItemsSource="{Binding Source={StaticResource DocumentosVM}, Path=ItemCboDocumentos}"  SelectedItem="{Binding Tipo, Mode=OneWay}" Margin="10 0 0 0" Width="230" HorizontalAlignment="Left"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 30 0 0">
-                                <Button Template="{StaticResource btnGuardar}" Margin="0 0 5 0">
+                                <Button Template="{DynamicResource btnGuardar}" Margin="0 0 5 0">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource DocumentosViewModel}, Path=btnGuardar_Click}">
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource DocumentosVM}, Path=btnGuardar_Click}">
                                                 <i:InvokeCommandAction.CommandParameter>
                                                     <MultiBinding Converter="{StaticResource studentParameterConverter}">
                                                         <Binding ElementName="textCodigo" Path="Text"/>
@@ -187,7 +188,8 @@
                                 <Button Template="{StaticResource btnCancelar}" Margin=" 5 0 0 0">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource DocumentosViewModel}, Path=btnCancelar_Click}" CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}"/>
+                                            <i:InvokeCommandAction Command="{Binding Source={StaticResource DocumentosVM}, Path=btnCancelar_Click}" 
+                                                                   CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>

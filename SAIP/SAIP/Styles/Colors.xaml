@@ -11,6 +11,8 @@
     <Color x:Key="DarkPrimary">#FF093C5F</Color>
     <Color x:Key="Danger">#FFE02525</Color>
     <Color x:Key="DarkDanger">#FF9B1717</Color>
+    <Color x:Key="Information">#FF0B68A6</Color>
+    <Color x:Key="DarkInformation">#FF093C5F</Color>
     <Color x:Key="FontTitlePanel">#FF959595</Color>
     <Color x:Key="FontLabel">#DD000000</Color>
     <Color x:Key="SubItemSb">#FF2D2D30</Color>
@@ -24,6 +26,8 @@
     <SolidColorBrush x:Key="SC_DarkSucces" Color="{StaticResource DarkSucces}"/>
     <SolidColorBrush x:Key="SC_Danger" Color="{StaticResource Danger}"/>
     <SolidColorBrush x:Key="SC_DarkDanger" Color="{StaticResource DarkDanger}"/>
+    <SolidColorBrush x:Key="SC_Information" Color="{StaticResource Information}"/>
+    <SolidColorBrush x:Key="SC_DarkInformation" Color="{StaticResource DarkInformation}"/>
     <SolidColorBrush x:Key="SC_FontTitlePanel" Color="{StaticResource FontTitlePanel}"/>
     <SolidColorBrush x:Key="SC_FontLabel" Color="{StaticResource FontLabel}"/>
     <SolidColorBrush x:Key="Bg_SubItemSb" Color="{StaticResource SubItemSb}"/>

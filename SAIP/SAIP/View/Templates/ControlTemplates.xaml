@@ -1,11 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
-
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../Converters/ViewModelToView.xaml"/>
-        <ResourceDictionary Source="../../Styles/PathImages.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:UserControl="clr-namespace:SAIP.View.UserControls">
 
     <!--Button Sucursal Activa-->
     <DataTemplate x:Key="Button_SucursalActiva">
@@ -23,6 +19,93 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+    </DataTemplate>
+
+    <!--Button Guardar-->
+    <ControlTemplate x:Key="btnGuardar" TargetType="Button">
+        <Button Background="#FF219C36" BorderBrush="#FF12571E" Width="120">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <Image Source="pack://application:,,,/Resource/Images/Buttons/guardar.png"/>
+                <TextBlock Text="Guardar" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <!--Button Cancelar-->
+    <ControlTemplate x:Key="btnCancelar">
+        <Button Background="{DynamicResource SC_Danger}" BorderBrush="{DynamicResource SC_DarkDanger}" Width="120">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <Image Source="{DynamicResource Img_BtnCancelar}"/>
+                <TextBlock Text="Cancelar" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+    </ControlTemplate>
+
+    <!--Button Cerrar-->
+    <ControlTemplate x:Key="btnCerrar">
+        <Button Name="btnCerrar" 
+                        Width="25" 
+                        Height="25" 
+                        BorderBrush="{x:Null}" 
+                        HorizontalAlignment="Right" 
+                        Margin="0 0 10 0" 
+                        Command="{Binding Source={StaticResource MainVM}, Path=btnCloseUserControl}">
+            <Button.Background>
+                <ImageBrush ImageSource="{DynamicResource Img_BtnCerrar}"/>
+            </Button.Background>
+        </Button>
+    </ControlTemplate>
+
+    <!--Button Editar-->
+    <ControlTemplate x:Key="btnEditar">
+        <Button Background="{DynamicResource SC_Information}" BorderBrush="{DynamicResource SC_DarkInformation}" Width="60" Height="30" Margin="5">
+            <Image Source="{DynamicResource Img_BtnEditar}"/>
+        </Button>
+    </ControlTemplate>
+
+    <!--Button Eliminar-->
+    <ControlTemplate x:Key="btnEliminar">
+        <Button Background="#FFBD1212" BorderBrush="#FF760B0B" Width="60" Height="30" Margin="5">
+            <Image Source="pack://application:,,,/Resource/Images/Buttons/eliminar.png"/>
+        </Button>
+    </ControlTemplate>
+
+    <!--Button Update_Delete-->
+    <DataTemplate x:Key="btn_Update_Delete">
+        <StackPanel Orientation="Horizontal">
+            <Button Name="btnEditar" 
+                    Command="{Binding Source={StaticResource DocumentosVM}, Path=btnEditar_Click}" 
+                    CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}" 
+                    Background="{DynamicResource SC_Information}" 
+                    BorderBrush="{DynamicResource SC_DarkInformation}" 
+                    Width="60" 
+                    Height="30" 
+                    Margin="5"
+                    ToolTip="Edita el registro seleccionado">
+                <Image Source="{DynamicResource Img_BtnEditar}"/>
+            </Button>
+            <Button Name="btnEliminar" 
+                    Command="{Binding Source={StaticResource DocumentosVM}, Path=btnEliminar_Click}" 
+                    CommandParameter="{Binding ElementName=dtgListaDocumentos, Path=SelectedItem}" 
+                    Background="{DynamicResource SC_Danger}" 
+                    BorderBrush="{DynamicResource SC_DarkDanger}" 
+                    Width="60" 
+                    Height="30" 
+                    Margin="5"
+                    ToolTip="Elimina el registro seleccionado">
+                <Image Source="{DynamicResource Img_BtnEliminar}"/>
+            </Button>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--Item Template Sucursales-->
+    <DataTemplate x:Key="ItemTemplateAccesoSucursales">
+        <CheckBox Content="{Binding RazonSocial}" FontSize="10" FontWeight="Bold" Height="15" Cursor="Hand"/>
+    </DataTemplate>
+
+    <!--UserControls-->
+    <DataTemplate x:Key="DocumentosView">
+        <UserControl:DocumentosCtrlU/>
     </DataTemplate>
 
 </ResourceDictionary>

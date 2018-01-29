@@ -1,4 +1,5 @@
-﻿using SAIP.View.Windows;
+﻿using SAIP.View.UserControls;
+using SAIP.View.Windows;
 
 namespace SAIP.Helpers
 {
@@ -10,6 +11,16 @@ namespace SAIP.Helpers
             get
             {
                 var x = MainWindow.Instance == null ? new MainWindow() : MainWindow.Instance;
+                return x;
+            }
+        }
+
+        /******DocumentosCrtlU******/
+        public static DocumentosCtrlU DocInstance
+        {
+            get
+            {
+                var x = DocumentosCtrlU.Instance == null ? new DocumentosCtrlU() : DocumentosCtrlU.Instance;
                 return x;
             }
         }

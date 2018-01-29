@@ -9,6 +9,9 @@
     <ImageSource x:Key="Img_BtnMinimizar">pack://application:,,,/Resource/Images/Buttons/minimizar.png</ImageSource>
     <ImageSource x:Key="Img_BtnMaximizar">pack://application:,,,/Resource/Images/Buttons/maximizar.png</ImageSource>
     <ImageSource x:Key="Img_BtnRestaurar">pack://application:,,,/Resource/Images/Buttons/reajustar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnCancelar">pack://application:,,,/Resource/Images/Buttons/cancelar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnEditar">pack://application:,,,/Resource/Images/Buttons/editar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnEliminar">pack://application:,,,/Resource/Images/Buttons/eliminar.png</ImageSource>
     
     <!--Path de Imágenes para SideBar-->
     <ImageSource x:Key="Img_SideBarPuntoMedio">pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png</ImageSource>

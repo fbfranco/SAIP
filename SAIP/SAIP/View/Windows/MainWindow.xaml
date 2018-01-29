@@ -1222,7 +1222,7 @@
                                             </Grid.Style>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnDocumentos}"/>
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="DocumentosView"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>
@@ -1550,7 +1550,7 @@
                                 </Grid>
                             </Border>
                         </StackPanel>
-                        <Grid Name="MainContainer">
+                        <Grid Name="MainContainer" Opacity="0">
                             <ContentControl ContentTemplate="{Binding ControlView}"/>
                         </Grid>
                     </Grid>

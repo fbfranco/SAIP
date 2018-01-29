@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace SAIP.ViewModel
 {
@@ -39,12 +40,13 @@ namespace SAIP.ViewModel
             myMediaElement_MediaOpened = new RelayCommand(_myMediaElement_MediaOpened);
             WindowState = new RelayCommand(_WindowState);
             btnSucursal_Click = new RelayCommand(_btnSucursal_Click);
-            btnDocumentos_MouseLeftButtonUp = new RelayCommand(_btnDocumentos_MouseLeftButtonUp);
+            btnSubItem_Click = new RelayCommand(_btnSubItem_Click);
             btnCloseUserControl = new RelayCommand(_btnCloseUserControl);
             btnClosing_Click = new RelayCommand(_btnClosing_Click);
             btnMaximizar = new RelayCommand(_btnMaximizar);
             btnMinimizar = new RelayCommand(_btnMinimizar);
             btnSideBar_Click = new RelayCommand(_btnSideBar_Click);
+            MainContainer_Loaded = new RelayCommand(_MainContainer_Loaded);
 
             UserName = Login_ViewModel.Username;
             Password = Login_ViewModel.Password;
@@ -73,7 +75,7 @@ namespace SAIP.ViewModel
         public RelayCommand lblSucursal_MouseLeftButtonDown { get; set; }
         public RelayCommand LoadAccesos { get; set; }
         public RelayCommand btnSucursal_Click { get; set; }
-        public RelayCommand btnDocumentos_MouseLeftButtonUp { get; set; }
+        public RelayCommand btnSubItem_Click { get; set; }
         public RelayCommand btnCloseUserControl { get; set; }
         public RelayCommand myMediaElement_MediaOpened { get; set; }
         public RelayCommand btnClosing_Click { get; set; }
@@ -81,6 +83,7 @@ namespace SAIP.ViewModel
         public RelayCommand btnMinimizar { get; set; }
         public RelayCommand WindowState { get; set; }
         public RelayCommand btnSideBar_Click { get; set; }
+        public RelayCommand MainContainer_Loaded { get; set; }
         #endregion
 
         #region MÉTODOS O PROPIEDADES DE LA CLASE
@@ -154,17 +157,40 @@ namespace SAIP.ViewModel
         }
 
         /******Evento Click en el Button Documento******/
-        private void _btnDocumentos_MouseLeftButtonUp(object obj)
+        private void _btnSubItem_Click(object obj)
         {
-            _ControlView = App.Current.FindResource("DocumentosView") as DataTemplate;
+            var x = obj.ToString();
+            _ControlView = App.Current.FindResource(x) as DataTemplate;
             RaisePropertyChanged("ControlView");
+
+            var Delay = new DispatcherTimer();
+            Delay.Interval = new TimeSpan(0, 0, 0, 0, 200);  
+            Delay.Tick += (s, a) =>
+            {
+                new General_Animations().EfectoDesvanecer(1);
+                Delay.Stop();
+            };
+            Delay.Start();
+        }
+
+        /******Evento Loaded del MainContainer******/
+        private void _MainContainer_Loaded(object obj)
+        {
         }
 
         /******Evento para Limpiar el Contenedor Principal******/
         private void _btnCloseUserControl(object obj)
         {
-            _ControlView = null;
-            RaisePropertyChanged("ControlView");
+            new General_Animations().EfectoDesvanecer(0);
+            var Delay = new DispatcherTimer();
+            Delay.Interval = new TimeSpan(0, 0, 0, 0, 510);
+            Delay.Tick += (s, a) =>
+            {
+                _ControlView = null;
+                RaisePropertyChanged("ControlView");
+                Delay.Stop();
+            };
+            Delay.Start();
         }
 
         /******Minimizar Ventana******/
