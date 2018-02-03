@@ -1,4 +1,5 @@
-﻿using SAIP.View.UserControls;
+﻿using SAIP.Model;
+using SAIP.View.UserControls;
 using SAIP.View.Windows;
 
 namespace SAIP.Helpers

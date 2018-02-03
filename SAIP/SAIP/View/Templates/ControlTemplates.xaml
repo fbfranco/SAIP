@@ -23,9 +23,9 @@
 
     <!--Button Guardar-->
     <ControlTemplate x:Key="btnGuardar" TargetType="Button">
-        <Button Background="#FF219C36" BorderBrush="#FF12571E" Width="120">
+        <Button Background="{DynamicResource SC_Succes}" BorderBrush="{DynamicResource SC_DarkSucces}" Width="120">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                <Image Source="pack://application:,,,/Resource/Images/Buttons/guardar.png"/>
+                <Image Source="{DynamicResource Img_BtnGuardar}"/>
                 <TextBlock Text="Guardar" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontWeight="Bold"/>
             </StackPanel>
         </Button>
@@ -102,10 +102,23 @@
     <DataTemplate x:Key="ItemTemplateAccesoSucursales">
         <CheckBox Content="{Binding RazonSocial}" FontSize="10" FontWeight="Bold" Height="15" Cursor="Hand"/>
     </DataTemplate>
+    
+    <!--Plantilla para Error al Validar-->
+    <ControlTemplate x:Key="validationTemplate">
+        <DockPanel>
+            <AdornedElementPlaceholder/>
+            <Image Source="{DynamicResource Img_BgError}"
+                   Width="16"/>
+        </DockPanel>
+    </ControlTemplate>
 
     <!--UserControls-->
     <DataTemplate x:Key="DocumentosView">
         <UserControl:DocumentosCtrlU/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EmpresaUC">
+        <UserControl:EmpresaCtrlU/>
     </DataTemplate>
 
 </ResourceDictionary>

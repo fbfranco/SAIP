@@ -12,6 +12,7 @@
     <ImageSource x:Key="Img_BtnCancelar">pack://application:,,,/Resource/Images/Buttons/cancelar.png</ImageSource>
     <ImageSource x:Key="Img_BtnEditar">pack://application:,,,/Resource/Images/Buttons/editar.png</ImageSource>
     <ImageSource x:Key="Img_BtnEliminar">pack://application:,,,/Resource/Images/Buttons/eliminar.png</ImageSource>
+    <ImageSource x:Key="Img_BtnGuardar">pack://application:,,,/Resource/Images/Buttons/guardar.png</ImageSource>
     
     <!--Path de Imágenes para SideBar-->
     <ImageSource x:Key="Img_SideBarPuntoMedio">pack://application:,,,/Resource/Images/MenuSideBar/punto_medio.png</ImageSource>
@@ -27,6 +28,7 @@
     <ImageSource x:Key="Img_BgLogin">pack://application:,,,/Resource/Images/Background/fondoLogin.jpg</ImageSource>
     <ImageSource x:Key="Img_BgMR">pack://application:,,,/Resource/Images/Background/mr.png</ImageSource>
     <ImageSource x:Key="Img_BgLogo">pack://application:,,,/Resource/Images/Background/grafico.png</ImageSource>
+    <ImageSource x:Key="Img_BgError">pack://application:,,,/Resource/Images/Background/advertencia.png</ImageSource>
     
     <!--Path de Video-->
     <system:Uri x:Key="Video_Bg">../../Resource/Video/Ipad.mp4</system:Uri>

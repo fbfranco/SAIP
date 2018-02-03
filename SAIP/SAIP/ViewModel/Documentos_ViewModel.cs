@@ -19,7 +19,6 @@ namespace SAIP.ViewModel
         {
             Documentos = new Documentos_BusinessObject();
             Documentos.DocumentosChanged += new EventHandler(DocumentosChanged);
-            _ItemCboDocumentos = new ObservableCollection<string>();
             btnEditar_Click = new RelayCommand(_btnEditar_Click);
             btnCancelar_Click = new RelayCommand(_btnCancelar_Click);
             btnEliminar_Click = new RelayCommand(_btnEliminar_Click);
@@ -48,6 +47,7 @@ namespace SAIP.ViewModel
         {
             get
             {
+                _ItemCboDocumentos = new ObservableCollection<string>();
                 _ItemCboDocumentos.Add("Persona");
                 _ItemCboDocumentos.Add("Comprobante");
                 return _ItemCboDocumentos;

@@ -24,6 +24,16 @@ namespace SAIP.Helpers
             return imgSrc;
         }
 
+        public static byte[] ImageToByte(BitmapImage imageC)
+        {
+            if (imageC is null) return null;
+            MemoryStream memStream = new MemoryStream();
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(imageC));
+            encoder.Save(memStream);
+            return memStream.ToArray();
+        }
+
         //Método para Recorrer el Árbol Visual de Objetos de las Ventanas
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
         {

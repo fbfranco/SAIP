@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace SAIP.Model
 {
-    public class Empresa_Model : INotifyPropertyChanged
+    public class Empresa_Model : INotifyPropertyChanged, IDataErrorInfo
     {
         #region IMPLEMENTACION DE LA INTERFAZ INOTIFYPROPERTYCHANGED
 
@@ -22,7 +22,7 @@ namespace SAIP.Model
         private DateTime _Aniversario;
         private string _Encargado;
         private string _Rubro;
-        private string _AniversarioFormater; 
+        private string _AniversarioFormater;
         #endregion
 
         #region MÉTODOS O PROPIEDADES
@@ -55,9 +55,25 @@ namespace SAIP.Model
         {
             get
             {
-                return Aniversario.ToString(@"dd \de MMMM \del yyyy");  
+                return Aniversario.ToString(@"dd \de MMMM \del yyyy");
             }
             set { _AniversarioFormater = value; INotifyOnPropertyChanged("AniversarioFormater"); }
+        }
+
+        public string Error => throw new NotImplementedException();
+
+        public string this[string PropertyName] => IsValid(PropertyName);
+
+        private string IsValid(string PropertyName)
+        {
+            switch (PropertyName)
+            {
+                case "RazonSocial":
+                    if (RazonSocial.Equals(""))
+                        return "Debe de llenar este campo de forma obligatoria";
+                break;
+            }
+            return null;
         }
         #endregion
     }

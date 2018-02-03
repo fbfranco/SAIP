@@ -3,16 +3,177 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="430.827" d:DesignWidth="378.947">
-    <Grid>
-         <Grid.RowDefinitions>
+             xmlns:val="clr-namespace:SAIP.Helpers"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"
+             DataContext="{StaticResource EmpresaVM}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding EmpresaUC_Unloaded}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Background="{Binding ElementName=ImgLogo, Path=Background}">
+        <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Button Name="btnCloseUserControl" Grid.Row="0" Template="{StaticResource btnCerrar}"/>
-        <Grid Name="ContenedorGeneral" Grid.Row="1">
-            
+        <Grid Name="ContenedorGeneral" 
+              Grid.Row="1"
+              VerticalAlignment="Top">
+            <Grid Name="TarjetaContainer"
+                    Width="500"
+                    Height="380">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" 
+                            HorizontalAlignment="Center">
+                        <Path Data="M135.09067,49.395105 L355.09069,49.645041 315.34069,-0.59171015 175.32006,-0.091821587 z" 
+                              HorizontalAlignment="Center" 
+                              Height="50" 
+                              Stretch="Fill" 
+                              Stroke="#FF030613" 
+                              Width="300">
+                            <Path.Fill>
+                                <LinearGradientBrush EndPoint="0.709,0.049" StartPoint="0.709,1.109">
+                                    <GradientStop Color="Black" Offset="0"/>
+                                    <GradientStop Color="#FF091340" Offset="0.331"/>
+                                    <GradientStop Color="#FF000106" Offset="1"/>
+                                    <GradientStop Color="#FF060E32" Offset="0.563"/>
+                                </LinearGradientBrush>
+                            </Path.Fill>
+                        </Path>
+                    </Border>
+                    <Border Grid.Row="1"
+                            CornerRadius="20"
+                            BorderThickness="2"
+                            BorderBrush="#FF030613"
+                            Padding="20" Margin="0,0,0,10">
+                        <Border.Background>
+                            <RadialGradientBrush GradientOrigin="-0.094,0.748" RadiusY="0.756" RadiusX="0.756">
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleY="1" ScaleX="1"/>
+                                        <SkewTransform AngleY="0" AngleX="0" CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="-22.754" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FF000A38" Offset="0.544"/>
+                                <GradientStop Color="#FF02040C" Offset="0.913"/>
+                                <GradientStop Color="#FF040717" Offset="0.35"/>
+                                <GradientStop Color="#FF071866" Offset="0.719"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Name="Image">
+                                <Border Name="ImgLogo" 
+                                        CornerRadius="10"
+                                        Width="200" 
+                                        Height="227"
+                                        Margin="5">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding Empresas/Logo,
+                                                    TargetNullValue={StaticResource Img_BgEmpresa},
+                                                    Mode=TwoWay}"/>
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <Button Width="92"
+                                            Height="25"
+                                            Margin="0 0 5 0"
+                                            Content="Cambiar" 
+                                            FontSize="12" 
+                                            BorderBrush="#FF000625"
+                                            Command="{Binding btnChangedImg}">
+                                        <Button.Background>
+                                            <RadialGradientBrush RadiusY="0.515" RadiusX="0.515">
+                                                <GradientStop Color="#FF000A40" Offset="1"/>
+                                                <GradientStop Color="#FF204F8B"/>
+                                            </RadialGradientBrush>
+                                        </Button.Background>
+                                    </Button>
+                                    <Button Width="92"
+                                            Height="25"
+                                            Margin="5 0 0 0"
+                                             Content="Defecto" 
+                                             FontSize="12"
+                                             BorderBrush="#FF000625"
+                                             Command="{Binding btnImgDefault}">
+                                        <Button.Background>
+                                            <RadialGradientBrush RadiusY="0.515" RadiusX="0.515">
+                                                <GradientStop Color="#FF000A40" Offset="1"/>
+                                                <GradientStop Color="#FF204F8B"/>
+                                            </RadialGradientBrush>
+                                        </Button.Background>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Name="InfoEmpresa" 
+                                        Margin="10" 
+                                        Width="225"
+                                        DataContext="{Binding Empresas}">
+                                <Label Style="{DynamicResource EtiquetasStandar}"
+                                       Content="Razón Social:" Foreground="White"/>
+                                <TextBox Name="TextRazonSocial"
+                                         Margin="10 0 10 10" 
+                                         Foreground="White"
+                                         Text="{Binding RazonSocial, Mode=TwoWay, 
+                                                ValidatesOnDataErrors=True}"
+                                         Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                                         ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, 
+                                                           Path=(Validation.Errors)[0].ErrorContent}"/>
+                                <Label Style="{DynamicResource EtiquetasStandar}"
+                                       Content="Rubro:" Foreground="White"/>
+                                <TextBox Name="TextRubro"
+                                         Margin="10 0 10 10" Foreground="White"
+                                         Text="{Binding Rubro, Mode=TwoWay}"/>
+                                <Label Style="{DynamicResource EtiquetasStandar}"
+                                       Content="Encargado:" Foreground="White"/>
+                                <TextBox Name="TextEncargado"
+                                         Margin="10 0 10 10" Foreground="White"
+                                         Text="{Binding Encargado, Mode=TwoWay}"/>
+                                <Label Style="{DynamicResource EtiquetasStandar}"
+                                       Content="Aniversario:" Foreground="White"/>
+                                <DatePicker Name="DateAniversario"
+                                            Margin="10 0 10 10" 
+                                            Foreground="White"
+                                            Text="{Binding Aniversario, Mode=TwoWay}" 
+                                            Validation.ErrorTemplate="{DynamicResource validationTemplate}"
+                                            ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, 
+                                                              Path=(Validation.Errors)[0].ErrorContent}"
+                                            SelectedDateFormat="Short"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"  >
+            <Button Template="{DynamicResource btnGuardar}"
+                    Margin="0 0 10 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding btnGuardar}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button Template="{DynamicResource btnCancelar}"
+                    Margin="10 0 0 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding btnCancelar}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

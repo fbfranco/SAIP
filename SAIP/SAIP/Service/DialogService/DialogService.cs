@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SAIP.Service.DialogService
 {
@@ -152,5 +156,33 @@ namespace SAIP.Service.DialogService
             return _imagen;
 
         }     
+
+        /******Abrir Imágenes******/
+        public ImageSource OpenImage()
+        {
+            var x = new BitmapImage();
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            // Configure open file dialog box
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "SAIP: Selecciona una Imagen para el Logo de tu Empresa";
+            dlg.Filter = "Archivos de Imágenes (*.jpg, *.png) |*.jpg; *.png"; // Filter files by extension
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                x = new BitmapImage();
+                x.BeginInit();
+                x.UriSource = new Uri(filename, UriKind.Absolute);
+                x.EndInit();
+            }
+
+            return x;
+        }
     }
 }

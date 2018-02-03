@@ -145,7 +145,7 @@ namespace SAIP.Animations
         public void EfectoDesvanecer(int v1)
         {
             DoubleAnimation EfectoDesvanecer = new DoubleAnimation();
-            EfectoDesvanecer.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 500));
+            EfectoDesvanecer.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 200));
             EfectoDesvanecer.From = MainView.MainContainer.Opacity;
             EfectoDesvanecer.To = v1;
             Storyboard sb = new Storyboard();

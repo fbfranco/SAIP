@@ -1,5 +1,6 @@
 ﻿using SAIP.ViewModel.Base;
 using System;
+using System.Windows.Media;
 
 namespace SAIP.Service.DialogService
 {
@@ -10,5 +11,7 @@ namespace SAIP.Service.DialogService
         void OcultarVentana(string nombreVentana);
 
         void CerrarVentana(string nombreVentana);
+
+        ImageSource OpenImage();
     }
 }

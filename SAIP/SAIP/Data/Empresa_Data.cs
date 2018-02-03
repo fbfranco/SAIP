@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SAIP.Data
@@ -35,7 +37,6 @@ namespace SAIP.Data
                 SqlDataAdapter SqlDta = new SqlDataAdapter(SqlCmd);
                 SqlDta.Fill(dtEmpresa);
 
-                //Volcar Datos de la Empresa a la Lista
                 foreach (DataRow item in dtEmpresa.Rows)
                 {
                     var obj = new Empresa_Model()
@@ -44,7 +45,7 @@ namespace SAIP.Data
                         Rubro = (string)item["rubro"],
                         Encargado = (string)item["encargado"],
                         Aniversario = (DateTime)item["aniversario"],
-                        Logo = item["logo"].Equals("") ? Accesoria.ByteToImage((byte[])item["logo"]) : null
+                        Logo = item["logo"] is DBNull ? null : Accesoria.ByteToImage((byte[])item["logo"])
                     };
                     Empresa.Add(obj);
                 }
@@ -62,6 +63,7 @@ namespace SAIP.Data
             return Empresa;
         }
         #endregion
+
         #region Editar Datos de la Empresa
         public static Boolean Editar(Empresa_Model Emp)
         {
@@ -76,7 +78,7 @@ namespace SAIP.Data
                 SqlParams[1] = new SqlParameter("@aniversario", Emp.Aniversario);
                 SqlParams[2] = new SqlParameter("@rubro", Emp.Rubro);
                 SqlParams[3] = new SqlParameter("@encargado", Emp.Encargado);
-                SqlParams[4] = new SqlParameter("@logo", Emp.Logo);
+                SqlParams[4] = new SqlParameter("@logo", Accesoria.ImageToByte(Emp.Logo as BitmapImage));
                 SqlCmd.Parameters.AddRange(SqlParams);
 
                 valor = SqlCmd.ExecuteNonQuery() == 1 ? true : false;

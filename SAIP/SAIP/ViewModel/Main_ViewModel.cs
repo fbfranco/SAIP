@@ -2,13 +2,11 @@
 using SAIP.BusinessObject;
 using SAIP.Model;
 using SAIP.Service.DialogService;
-using SAIP.View.Windows;
 using SAIP.ViewModel.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace SAIP.ViewModel
@@ -46,7 +44,6 @@ namespace SAIP.ViewModel
             btnMaximizar = new RelayCommand(_btnMaximizar);
             btnMinimizar = new RelayCommand(_btnMinimizar);
             btnSideBar_Click = new RelayCommand(_btnSideBar_Click);
-            MainContainer_Loaded = new RelayCommand(_MainContainer_Loaded);
 
             UserName = Login_ViewModel.Username;
             Password = Login_ViewModel.Password;
@@ -83,7 +80,6 @@ namespace SAIP.ViewModel
         public RelayCommand btnMinimizar { get; set; }
         public RelayCommand WindowState { get; set; }
         public RelayCommand btnSideBar_Click { get; set; }
-        public RelayCommand MainContainer_Loaded { get; set; }
         #endregion
 
         #region MÉTODOS O PROPIEDADES DE LA CLASE
@@ -160,22 +156,42 @@ namespace SAIP.ViewModel
         private void _btnSubItem_Click(object obj)
         {
             var x = obj.ToString();
-            _ControlView = App.Current.FindResource(x) as DataTemplate;
-            RaisePropertyChanged("ControlView");
-
-            var Delay = new DispatcherTimer();
-            Delay.Interval = new TimeSpan(0, 0, 0, 0, 200);  
-            Delay.Tick += (s, a) =>
+            if (ControlView != null)
             {
-                new General_Animations().EfectoDesvanecer(1);
-                Delay.Stop();
-            };
-            Delay.Start();
-        }
+                _btnCloseUserControl(null);
+                var Delay1 = new DispatcherTimer();
+                Delay1.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                Delay1.Tick += (s1, a1) =>
+                {
+                    _ControlView = App.Current.FindResource(x) as DataTemplate;
+                    RaisePropertyChanged("ControlView");
 
-        /******Evento Loaded del MainContainer******/
-        private void _MainContainer_Loaded(object obj)
-        {
+                    var Delay2 = new DispatcherTimer();
+                    Delay2.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                    Delay2.Tick += (s2, a2) =>
+                    {
+                        new General_Animations().EfectoDesvanecer(1);
+                        Delay2.Stop();
+                    };
+                    Delay2.Start();
+                    Delay1.Stop();
+                };
+                Delay1.Start();
+            }
+            else
+            {
+                _ControlView = App.Current.FindResource(x) as DataTemplate;
+                RaisePropertyChanged("ControlView");
+
+                var Delay = new DispatcherTimer();
+                Delay.Interval = new TimeSpan(0, 0, 0, 0, 50);  
+                Delay.Tick += (s, a) =>
+                {
+                    new General_Animations().EfectoDesvanecer(1);
+                    Delay.Stop();
+                };
+                Delay.Start();
+            }
         }
 
         /******Evento para Limpiar el Contenedor Principal******/
@@ -183,7 +199,7 @@ namespace SAIP.ViewModel
         {
             new General_Animations().EfectoDesvanecer(0);
             var Delay = new DispatcherTimer();
-            Delay.Interval = new TimeSpan(0, 0, 0, 0, 510);
+            Delay.Interval = new TimeSpan(0, 0, 0, 0, 200);
             Delay.Tick += (s, a) =>
             {
                 _ControlView = null;

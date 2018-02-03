@@ -1150,7 +1150,7 @@
                                             </Grid.Style>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="{Binding ElementName=btnEmpresa}"/>
+                                                    <i:InvokeCommandAction Command="{Binding btnSubItem_Click}" CommandParameter="EmpresaUC"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <Grid.ColumnDefinitions>

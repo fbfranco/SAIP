@@ -91,6 +91,7 @@
     <Compile Include="Data\Sucursal_Data.cs" />
     <Compile Include="Helpers\Accesoria.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\Validations.cs" />
     <Compile Include="Helpers\ViewInstances.cs" />
     <Compile Include="Model\AccesoSucursal_Model.cs" />
     <Compile Include="Model\Documentos_Model.cs" />
@@ -244,6 +245,7 @@
     <Resource Include="Resource\Images\MenuSideBar\punto_medio.png" />
     <Resource Include="Resource\Images\MenuSideBar\seguridad.png" />
     <Resource Include="Resource\Images\MenuSideBar\ventas.png" />
+    <Resource Include="Resource\Images\Background\advertencia.png" />
     <Content Include="Resource\Video\Ipad.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
